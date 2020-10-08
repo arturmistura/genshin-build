@@ -1,0 +1,33 @@
+<mat-toolbar color="primary">
+  <span>Genshin Build</span>
+</mat-toolbar>
+
+<div class="content">
+  <!-- <router-outlet></router-outlet> -->
+  <mat-form-field appearance="fill">
+    <mat-label>Select your character: </mat-label>
+    <mat-select
+      placeholder="Select your Character"
+      [(ngModel)]="selectedCharacter"
+    >
+      <mat-select-trigger>
+        <img
+          width="50"
+          height="50"
+          src="{{ picBasePath + selectedCharacter.name + picExtension }}"
+        />
+        <span class="selected-character-name"> {{ selectedCharacter.name }}</span>
+      </mat-select-trigger>
+      <mat-option *ngFor="let character of characters" [value]="character">
+        <img
+          width="50"
+          height="50"
+          src="{{ picBasePath + character.name + picExtension }}"
+        />
+        {{ character.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<mat-toolbar color="primary"> </mat-toolbar>
