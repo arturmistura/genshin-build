@@ -1,7 +1,7 @@
 import { WeaponType } from './weapon-type';
 
-export class Character {
+export class Weapon {
   id: number;
   name: string;
-  weaponType: WeaponType;
+  type: WeaponType;
 }

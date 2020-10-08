@@ -2,32 +2,75 @@
   <span>Genshin Build</span>
 </mat-toolbar>
 
-<div class="content">
-  <!-- <router-outlet></router-outlet> -->
-  <mat-form-field appearance="fill">
-    <mat-label>Select your character: </mat-label>
-    <mat-select
-      placeholder="Select your Character"
-      [(ngModel)]="selectedCharacter"
-    >
-      <mat-select-trigger>
-        <img
-          width="50"
-          height="50"
-          src="{{ picBasePath + selectedCharacter.name + picExtension }}"
-        />
-        <span class="selected-character-name"> {{ selectedCharacter.name }}</span>
-      </mat-select-trigger>
-      <mat-option *ngFor="let character of characters" [value]="character">
-        <img
-          width="50"
-          height="50"
-          src="{{ picBasePath + character.name + picExtension }}"
-        />
-        {{ character.name }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-</div>
+<mat-sidenav-container>
+  <mat-sidenav class="character-status" mode="side" opened>
+    <mat-card>
+      <mat-card-title *ngIf="selectedCharacter != null && selectedCharacter.id > 0">
+        {{selectedCharacter.name}}
+      </mat-card-title>
+    </mat-card>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-card class="card-character">
+      <mat-card-title>Create your character build</mat-card-title>
+      <mat-form-field appearance="fill">
+        <mat-label>Select your character: </mat-label>
+        <mat-select placeholder="Select your Character" [(ngModel)]="selectedCharacter">
+          <mat-select-trigger *ngIf="selectedCharacter != null && selectedCharacter.id > 0">
+            <img width="50" height="50" src="{{ picBasePathCharacter + selectedCharacter.name + picExtension }}" />
+            <span>
+              {{ selectedCharacter.name }}</span>
+          </mat-select-trigger>
+          <mat-option>--Select--</mat-option>
+          <mat-option *ngFor="let character of characters" [value]="character">
+            <img width="50" height="50" src="{{ picBasePathCharacter + character.name + picExtension }}" />
+            {{ character.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" *ngIf="selectedCharacter != null && selectedCharacter.id > 0">
+        <mat-label>Select your weapon: </mat-label>
+        <mat-select placeholder="Select your weapon" [(ngModel)]="selectedWeapon">
+          <mat-select-trigger *ngIf="selectedWeapon != null && selectedWeapon.id > 0">
+            <img width="40" height="40" src="{{ picBasePathWeapon + formatImageName(selectedWeapon.name) + picExtension }}" />
+            <span>
+              {{ selectedWeapon.name }}</span>
+          </mat-select-trigger>
+          <mat-option>--Select--</mat-option>
+          <mat-option *ngFor="let weapon of getWeapons()" [value]="weapon">
+            <img width="40" height="40" src="{{ picBasePathWeapon + formatImageName(weapon.name) + picExtension }}" />
+            {{ weapon.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-card>
+    <mat-divider></mat-divider>
+    <mat-card>
+      <mat-card-title>Artefacts</mat-card-title>
+      <mat-tab-group>
+        <mat-tab label="Flower of Life">
+          
+        </mat-tab>
+
+        <mat-tab label="Plume of Death">
+
+        </mat-tab>
+
+        <mat-tab label="Sands of Eon">
+
+        </mat-tab>
+
+        <mat-tab label="Goblet of Enotherm">
+
+        </mat-tab>
+
+        <mat-tab label="Circlet of Logos">
+
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card>
+  </mat-sidenav-content>
+</mat-sidenav-container>
 
 <mat-toolbar color="primary"> </mat-toolbar>
