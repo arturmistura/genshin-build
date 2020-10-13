@@ -1,0 +1,51 @@
+<mat-sidenav-container>
+  <mat-sidenav class="character-status" mode="side" opened>
+    <app-list-build></app-list-build>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-card class="card-character">
+      <app-team-build></app-team-build>
+    </mat-card>
+    <mat-divider></mat-divider>
+    <mat-card>
+      <mat-card-title>Artefacts</mat-card-title>
+      <mat-tab-group>
+        <mat-tab label="getSlotName(1)">
+          <ng-template mat-tab-label>
+            <img class="slot-tab" width="50" height="50" src="./../assets/images/artefacts/flower_of_life.png">
+          </ng-template>
+          <app-artefact-build [slot]="1"></app-artefact-build>
+        </mat-tab>
+
+        <mat-tab label="getSlotName(2)">
+          <ng-template mat-tab-label>
+            <img class="slot-tab" width="50" height="50" src="./../assets/images/artefacts/plume_of_death.png">
+          </ng-template>
+          <app-artefact-build [slot]="2"></app-artefact-build>
+        </mat-tab>
+
+        <mat-tab label="getSlotName(3)">
+          <ng-template mat-tab-label>
+            <img class="slot-tab" width="50" height="50" src="./../assets/images/artefacts/sands_of_eon.png">
+          </ng-template>
+          <app-artefact-build [slot]="3"></app-artefact-build>
+        </mat-tab>
+
+        <mat-tab label="getSlotName(4)">
+          <ng-template mat-tab-label>
+            <img class="slot-tab" width="50" height="50" src="./../assets/images/artefacts/goblet_of_enotherm.png">
+          </ng-template>
+          <app-artefact-build [slot]="4"></app-artefact-build>
+        </mat-tab>
+
+        <mat-tab label="getSlotName(5)">
+          <ng-template mat-tab-label>
+            <img class="slot-tab" width="50" height="50" src="./../assets/images/artefacts/circle_of_logos.png">
+          </ng-template>
+          <app-artefact-build [slot]="5"></app-artefact-build>
+        </mat-tab>
+      </mat-tab-group>
+    </mat-card>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+

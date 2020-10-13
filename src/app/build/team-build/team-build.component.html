@@ -1,0 +1,49 @@
+<mat-card-title>Create your character build</mat-card-title>
+<mat-grid-list [cols]="3" rowHeight="150px">
+  <mat-grid-tile>
+    <mat-form-field appearance="outline">
+      <mat-label>Select your character: </mat-label>
+      <mat-select placeholder="Select your Character" [(ngModel)]="selectedCharacter">
+        <mat-select-trigger *ngIf="selectedCharacter != null && selectedCharacter.id > 0">
+          <img width="50" height="50" src="{{ picBasePathCharacter + selectedCharacter.name + picExtension }}" />
+          <span>
+            {{ selectedCharacter.name }}</span>
+        </mat-select-trigger>
+        <mat-option>--Select--</mat-option>
+        <mat-option *ngFor="let character of characters" [value]="character">
+          <img width="50" height="50" src="{{ picBasePathCharacter + character.name + picExtension }}" />
+          {{ character.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-form-field appearance="outline" *ngIf="selectedCharacter != null && selectedCharacter.id > 0">
+      <mat-label>Select your weapon: </mat-label>
+      <mat-select [(ngModel)]="selectedWeapon">
+        <mat-select-trigger *ngIf="selectedWeapon != null && selectedWeapon.id > 0">
+          <img width="40" height="40"
+            src="{{ picBasePathWeapon + formatImageName(selectedWeapon.name) + picExtension }}" />
+          <span>
+            {{ selectedWeapon.name }}</span>
+        </mat-select-trigger>
+        <mat-option>--Select--</mat-option>
+        <mat-option *ngFor="let weapon of getWeapons()" [value]="weapon">
+          <img width="40" height="40" src="{{ picBasePathWeapon + formatImageName(weapon.name) + picExtension }}" />
+          {{ weapon.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-grid-tile>
+  <mat-grid-tile>
+    <mat-form-field appearance="outline">
+      <mat-label>Select your suggested team: </mat-label>
+      <mat-select [formControl]="suggestedTeam" multiple required (selectionChange)="suggestedTeamChanged()">
+        <mat-option *ngFor="let character of characters" [value]="character" [disabled]="canSelect(character)">
+          <img width="50" height="50" src="{{ picBasePathCharacter + character.name + picExtension }}" />
+          {{ character.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-grid-tile>
+</mat-grid-list>

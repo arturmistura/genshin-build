@@ -1,0 +1,28 @@
+table {
+  width: 100%;
+}
+
+.mat-column-character {
+  width: 7%;
+}
+
+.mat-column-name {
+  width: 75%;
+}
+
+.mat-column-votes {
+  width: 3%;
+}
+
+.mat-column-votes-icon {
+  width: 10%;
+}
+
+.mat-table {
+  border-collapse: separate!important;
+  border-spacing:0 4px!important;
+}
+
+.mat-cell {
+  padding: 10px 0;
+}

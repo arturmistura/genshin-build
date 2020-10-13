@@ -1,0 +1,101 @@
+<mat-card>
+  <mat-card-content>
+    <mat-grid-list cols="4" rowHeight="100px" gutterSize="15">
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Artefact Sets: </mat-label>
+          <mat-select [(ngModel)]="selectedSet">
+            <mat-option>--Select--</mat-option>
+            <mat-option *ngFor="let artefactSet of artefactSets" [value]="artefactSet">
+              {{ artefactSet.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Main stat</mat-label>
+          <mat-select [(ngModel)]="selectedMainStat">
+            <mat-option *ngIf="mainStats.length > 1">--Select--</mat-option>
+            <mat-option *ngFor="let mainStat of mainStats" [value]="mainStat">
+              {{ mainStat.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field appearance="outline">
+          <mat-label>Ranking</mat-label>
+          <mat-select [(ngModel)]="selectedRanking">
+            <mat-select-trigger *ngIf="selectedRanking > 0">
+              <img *ngFor="let i of getRankings(selectedRanking)" height="15" width="15" src="https://rerollcdn.com/SDSGC/ui/skill_star.png" />
+            </mat-select-trigger>
+            <mat-option>--Select--</mat-option>
+            <mat-option *ngFor="let i of [1, 2, 3, 4, 5]" [value]="i">
+              <img *ngFor="let j of getRankings(i)" height="15" width="15" src="https://rerollcdn.com/SDSGC/ui/skill_star.png">
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <div *ngIf="selectedSet != null && selectedSet.id > 0">
+          <div class="set-bonus" *ngFor="let bonus of selectedSet.bonus">
+            <mat-label>{{bonus.numberOfPieces}}-piece(s) </mat-label>
+            <mat-label>{{bonus.description}}</mat-label>
+          </div>
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field class="select-main-stat" appearance="outline">
+          <mat-label>Sub Stat 1</mat-label>
+          <mat-select (selectionChange)="selectSubStat($event.value, 0)">
+            <mat-option>--Select--</mat-option>
+            <mat-option *ngFor="let subStat of subStats" [value]="subStat" [disabled]="hasSubStat(subStat)">
+              {{ subStat.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field class="select-main-stat" appearance="outline">
+          <mat-label>Sub Stat 2</mat-label>
+          <mat-select (selectionChange)="selectSubStat($event.value, 1)">
+            <mat-option>--Select--</mat-option>
+            <mat-option *ngFor="let subStat of subStats" [value]="subStat" [disabled]="hasSubStat(subStat)">
+              {{ subStat.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="2" [rowspan]="2">
+        <mat-row *ngFor="">
+          <span>Status: </span>
+          <span></span>
+        </mat-row>
+
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field class="select-main-stat" appearance="outline">
+          <mat-label>Sub Stat 3</mat-label>
+          <mat-select (selectionChange)="selectSubStat($event.value, 2)">
+            <mat-option>--Select--</mat-option>
+            <mat-option *ngFor="let subStat of subStats" [value]="subStat" [disabled]="hasSubStat(subStat)">
+              {{ subStat.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field class="select-main-stat" appearance="outline">
+          <mat-label>Sub Stat 4</mat-label>
+          <mat-select (selectionChange)="selectSubStat($event.value, 3)">
+            <mat-option>--Select--</mat-option>
+            <mat-option *ngFor="let subStat of subStats" [value]="subStat" [disabled]="hasSubStat(subStat)">
+              {{ subStat.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </mat-card-content>
+</mat-card>
