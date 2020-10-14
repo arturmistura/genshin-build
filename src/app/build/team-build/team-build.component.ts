@@ -11,13 +11,10 @@ import { DataService } from 'src/app/services/data-service';
   styleUrls: ['./team-build.component.scss']
 })
 export class TeamBuildComponent implements OnInit {
-  picBasePathWeapon = 'https://rerollcdn.com/GENSHIN/Weapon/NEW/';
-  picBasePathCharacter = 'https://rerollcdn.com/GENSHIN/Characters/';
-  picExtension = '.png';
-
   characters: Observable<Character[]>;
   selectedCharacter: Character = new Character();
 
+  weapons: Weapon[];
   selectedWeapon: Weapon = new Weapon();
 
   suggestedTeam = new FormControl();
@@ -29,12 +26,14 @@ export class TeamBuildComponent implements OnInit {
     this.characters = this.dataService.getCharacters();
   }
 
-  getWeapons(): Weapon[] {
+  changeMainCharacter(): void {
     if (this.selectedCharacter != null) {
-      return this.dataService.getWeaponsByType(this.selectedCharacter.weaponType);
+      this.dataService.getWeapons().subscribe(weapons => {
+        this.weapons = weapons.filter(weapon => weapon.weaponType === this.selectedCharacter.weaponType);
+      });
+    } else {
+      this.weapons = [];
     }
-
-    return [];
   }
 
   formatImageName(weaponName: string): string {

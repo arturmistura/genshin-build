@@ -1,7 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ArtefactBonus } from 'src/app/models/artefact-bonus';
+import { ArtefactType } from 'src/app/models/artefact-type';
+import { StatType } from 'src/app/models/stat-type';
 import { ArtefactSet } from '../../models/artefact-set';
-import { SlotType } from '../../models/slot-type';
-import { ArtefactStat } from '../../models/artefact-stat';
+import { Stat } from '../../models/stat';
 import { DataService } from '../../services/data-service';
 
 @Component({
@@ -10,39 +12,30 @@ import { DataService } from '../../services/data-service';
   styleUrls: ['./artefact-build.component.scss']
 })
 export class ArtefactBuildComponent implements OnInit {
-  @Input() slot: SlotType;
+  @Input() artefactType: ArtefactType;
 
-  mainStats: ArtefactStat[];
-  subStats: ArtefactStat[];
-  artefactSets: ArtefactSet[];
-  selectedSet: ArtefactSet;
-  selectedMainStat: ArtefactStat;
-  selectedSubStats: ArtefactStat[] = [new ArtefactStat(), new ArtefactStat(), new ArtefactStat(), new ArtefactStat()];
-  selectedRanking: number;
+  mainStats: Stat[];
+  subStats: Stat[];
+
+  selectedMainStat: Stat;
+  selectedSubStats: Stat[] = [new Stat(), new Stat(), new Stat(), new Stat()];
 
   constructor(public dataService: DataService) { }
 
   ngOnInit(): void {
-    this.artefactSets = this.dataService.getArtefactSets();
-    this.mainStats = this.dataService.getMainStatsBySlotType(this.slot);
-    this.subStats = this.dataService.getSubStats();
+    this.dataService.getStats().subscribe(stats => {
+      this.subStats = stats;
+      this.setMainStats();
+    });
   }
 
-  selectSubStat(subStat: ArtefactStat, subStatSlot: number): boolean {
-    if (!this.hasSubStat(subStat)) {
-      this.selectedSubStats[subStatSlot] = subStat;
-      return true;
-    } else {
-      return false;
-    }
+  selectSubStat(subStat: Stat, slot: number): void {
+    this.selectedSubStats[slot] = subStat;
   }
 
-  hasSubStat(subStat: ArtefactStat): boolean {
-    return (this.selectedSubStats.findIndex(stat => {
-      return stat.characterStat === subStat.characterStat;
-    }) >= 0) ||
-      (this.selectedMainStat != null &&
-        subStat.characterStat === this.selectedMainStat.characterStat);
+  hasSubStat(subStat: Stat): boolean {
+    return (this.selectedMainStat != null && this.selectedMainStat.statType === subStat.statType) ||
+      this.selectedSubStats.findIndex(stat => stat.statType === subStat.statType) > -1;
   }
 
   getRankings(ranking: number): number[] {
@@ -53,5 +46,73 @@ export class ArtefactBuildComponent implements OnInit {
     }
 
     return rankings;
+  }
+
+  setMainStats(): void {
+    switch (this.artefactType) {
+      case ArtefactType.CircletOfLogos:
+        this.mainStats = this.getStatsCircletOfLogos();
+        break;
+      case ArtefactType.FlowerOfLife:
+        this.mainStats = this.getStatsFlowerOfLife();
+        break;
+      case ArtefactType.GobletOfEnotherm:
+        this.mainStats = this.getStatsGobletOfEnotherm();
+        break;
+      case ArtefactType.PlumeOfDeath:
+        this.mainStats = this.getStatsPlumeOfDeath();
+        break;
+      case ArtefactType.SandsOfEon:
+        this.mainStats = this.getStatsSandsOfEon();
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  getStatsCircletOfLogos(): Stat[] {
+    return this.subStats.filter(stat => {
+      return stat.statType === StatType.HPPercentual ||
+        stat.statType === StatType.DefPercentual ||
+        stat.statType === StatType.AtkPercentual ||
+        stat.statType === StatType.ElementalMastery ||
+        stat.statType === StatType.CritRate ||
+        stat.statType === StatType.CritDamage ||
+        stat.statType === StatType.HealingBonusPercentage;
+    });
+  }
+
+  getStatsFlowerOfLife(): Stat[] {
+    return this.subStats.filter(stat => {
+      return stat.statType === StatType.BaseHp;
+    });
+  }
+
+  getStatsGobletOfEnotherm(): Stat[] {
+    return this.subStats.filter(stat => {
+      return stat.statType === StatType.BaseHp ||
+        stat.statType === StatType.DefPercentual ||
+        stat.statType === StatType.AtkPercentual ||
+        stat.statType === StatType.ElementalMastery ||
+        stat.statType === StatType.ElementalDamageBonusPercentage ||
+        stat.statType === StatType.PhysicalDamageBonusPercentage;
+    });
+  }
+
+  getStatsPlumeOfDeath(): Stat[] {
+    return this.subStats.filter(stat => {
+      return stat.statType === StatType.BaseAtk;
+    });
+  }
+
+  getStatsSandsOfEon(): Stat[] {
+    return this.subStats.filter(stat => {
+      return stat.statType === StatType.HPPercentual ||
+        stat.statType === StatType.DefPercentual ||
+        stat.statType === StatType.AtkPercentual ||
+        stat.statType === StatType.ElementalMastery ||
+        stat.statType === StatType.EnergyRecharge;
+    });
   }
 }

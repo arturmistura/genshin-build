@@ -1,4 +1,4 @@
-export enum CharacterStat {
+export enum StatType {
   BaseHp = 1,
   BaseAtk = 2,
   HPPercentual = 3,
@@ -10,5 +10,6 @@ export enum CharacterStat {
   HealingBonusPercentage = 9,
   EnergyRecharge = 10,
   ElementalDamageBonusPercentage = 11,
-  PhysicalDamageBonusPercentage = 12
+  PhysicalDamageBonusPercentage = 12,
+  BaseDef = 13
 }

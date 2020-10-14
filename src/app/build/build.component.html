@@ -3,6 +3,11 @@
     <app-list-build></app-list-build>
   </mat-sidenav>
   <mat-sidenav-content>
+    <mat-card>
+      <app-build-description>
+        
+      </app-build-description>
+    </mat-card>
     <mat-card class="card-character">
       <app-team-build></app-team-build>
     </mat-card>
@@ -10,39 +15,39 @@
     <mat-card>
       <mat-card-title>Artefacts</mat-card-title>
       <mat-tab-group>
-        <mat-tab label="getSlotName(1)">
+        <mat-tab label="Flower of Life">
           <ng-template mat-tab-label>
             <img class="slot-tab" width="50" height="50" src="./../assets/images/artefacts/flower_of_life.png">
           </ng-template>
-          <app-artefact-build [slot]="1"></app-artefact-build>
+          <app-artefact-build [artefactType]="1"></app-artefact-build>
         </mat-tab>
 
-        <mat-tab label="getSlotName(2)">
+        <mat-tab label="Plume of Death">
           <ng-template mat-tab-label>
             <img class="slot-tab" width="50" height="50" src="./../assets/images/artefacts/plume_of_death.png">
           </ng-template>
-          <app-artefact-build [slot]="2"></app-artefact-build>
+          <app-artefact-build [artefactType]="2"></app-artefact-build>
         </mat-tab>
 
-        <mat-tab label="getSlotName(3)">
+        <mat-tab label="Sands of Eon">
           <ng-template mat-tab-label>
             <img class="slot-tab" width="50" height="50" src="./../assets/images/artefacts/sands_of_eon.png">
           </ng-template>
-          <app-artefact-build [slot]="3"></app-artefact-build>
+          <app-artefact-build [artefactType]="3"></app-artefact-build>
         </mat-tab>
 
-        <mat-tab label="getSlotName(4)">
+        <mat-tab label="Goblet of Enotherm">
           <ng-template mat-tab-label>
             <img class="slot-tab" width="50" height="50" src="./../assets/images/artefacts/goblet_of_enotherm.png">
           </ng-template>
-          <app-artefact-build [slot]="4"></app-artefact-build>
+          <app-artefact-build [artefactType]="4"></app-artefact-build>
         </mat-tab>
 
-        <mat-tab label="getSlotName(5)">
+        <mat-tab label="Circle of Logos">
           <ng-template mat-tab-label>
             <img class="slot-tab" width="50" height="50" src="./../assets/images/artefacts/circle_of_logos.png">
           </ng-template>
-          <app-artefact-build [slot]="5"></app-artefact-build>
+          <app-artefact-build [artefactType]="5"></app-artefact-build>
         </mat-tab>
       </mat-tab-group>
     </mat-card>

@@ -14,6 +14,7 @@ import { TeamBuildComponent } from './build/team-build/team-build.component';
 import { ListBuildComponent } from './build/list-build/list-build.component';
 import { BuildComponent } from './build/build.component';
 import { SearchComponent } from './search/search.component';
+import { BuildDescriptionComponent } from './build/build-description/build-description.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { SearchComponent } from './search/search.component';
     TeamBuildComponent,
     ListBuildComponent,
     BuildComponent,
-    SearchComponent
+    SearchComponent,
+    BuildDescriptionComponent
   ],
   imports: [
     BrowserModule,

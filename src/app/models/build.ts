@@ -14,4 +14,5 @@ export class Build {
   gobletOfEnotherm: Artefacts;
   circletOfLogos: Artefacts;
   votes: number;
+  team: Character[];
 }

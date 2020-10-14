@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Build } from 'src/app/models/build';
 import { DataService } from 'src/app/services/data-service';
 
@@ -12,7 +13,7 @@ export class ListBuildComponent implements OnInit {
   picBasePathCharacter = 'https://rerollcdn.com/GENSHIN/Characters/';
   picExtension = '.png';
 
-  builds: Build[];
+  builds: Observable<Build[]>;
 
   buildColumns: string[] = ['character', 'name', 'votes', 'votes-icon', 'actions'];
 
