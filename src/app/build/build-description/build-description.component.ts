@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { AbstractControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-build-description',
@@ -6,12 +7,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./build-description.component.scss']
 })
 export class BuildDescriptionComponent implements OnInit {
-  name: string;
-  description: string;
+  @Input() parentForm: FormGroup;
 
   constructor() { }
 
   ngOnInit(): void {
+
   }
 
+  get name(): AbstractControl {
+    return this.parentForm.controls.name;
+  }
+
+  get description(): AbstractControl {
+    return this.parentForm.controls.description;
+  }
 }

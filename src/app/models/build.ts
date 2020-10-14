@@ -1,4 +1,4 @@
-import { Artefacts } from './artefacts';
+import { Artefact } from './artefact';
 import { Character } from './character';
 import { Weapon } from './weapon';
 
@@ -8,11 +8,11 @@ export class Build {
   description: string;
   character: Character;
   weapon: Weapon;
-  flowerOfLife: Artefacts;
-  plumeOfDeath: Artefacts;
-  sandsOfEon: Artefacts;
-  gobletOfEnotherm: Artefacts;
-  circletOfLogos: Artefacts;
+  flowerOfLife: Artefact;
+  plumeOfDeath: Artefact;
+  sandsOfEon: Artefact;
+  gobletOfEnotherm: Artefact;
+  circletOfLogos: Artefact;
   votes: number;
   team: Character[];
 }

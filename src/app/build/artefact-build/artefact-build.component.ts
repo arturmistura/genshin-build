@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { AbstractControl, FormGroup } from '@angular/forms';
+import { Artefact } from 'src/app/models/artefact';
 import { ArtefactBonus } from 'src/app/models/artefact-bonus';
 import { ArtefactType } from 'src/app/models/artefact-type';
 import { StatType } from 'src/app/models/stat-type';
@@ -12,13 +14,12 @@ import { DataService } from '../../services/data-service';
   styleUrls: ['./artefact-build.component.scss']
 })
 export class ArtefactBuildComponent implements OnInit {
+  @Input() parentForm: FormGroup;
   @Input() artefactType: ArtefactType;
 
   mainStats: Stat[];
   subStats: Stat[];
-
-  selectedMainStat: Stat;
-  selectedSubStats: Stat[] = [new Stat(), new Stat(), new Stat(), new Stat()];
+  artefactSets: ArtefactSet[];
 
   constructor(public dataService: DataService) { }
 
@@ -27,25 +28,42 @@ export class ArtefactBuildComponent implements OnInit {
       this.subStats = stats;
       this.setMainStats();
     });
+
+    this.dataService.getArtefactSets().subscribe(sets => {
+      this.artefactSets = sets;
+    });
   }
 
-  selectSubStat(subStat: Stat, slot: number): void {
-    this.selectedSubStats[slot] = subStat;
+  get mainStat(): AbstractControl {
+    return this.parentForm.controls.mainStat;
+  }
+
+  get subStat1(): AbstractControl {
+    return this.parentForm.controls.subStat1;
+  }
+
+  get subStat2(): AbstractControl {
+    return this.parentForm.controls.subStat2;
+  }
+
+  get subStat3(): AbstractControl {
+    return this.parentForm.controls.subStat3;
+  }
+
+  get subStat4(): AbstractControl {
+    return this.parentForm.controls.subStat4;
+  }
+
+  get artefactSet(): AbstractControl {
+    return this.parentForm.controls.artefactSet;
   }
 
   hasSubStat(subStat: Stat): boolean {
-    return (this.selectedMainStat != null && this.selectedMainStat.statType === subStat.statType) ||
-      this.selectedSubStats.findIndex(stat => stat.statType === subStat.statType) > -1;
-  }
-
-  getRankings(ranking: number): number[] {
-    const rankings = [];
-
-    for (let i = 1; i <= ranking; i++) {
-      rankings.push(i);
-    }
-
-    return rankings;
+    return (this.mainStat.value != null && this.mainStat.value.statType === subStat.statType) ||
+      (this.subStat1.value != null && this.subStat1.value.statType === subStat.statType) ||
+      (this.subStat2.value != null && this.subStat2.value.statType === subStat.statType) ||
+      (this.subStat3.value != null && this.subStat3.value.statType === subStat.statType) ||
+      (this.subStat4.value != null && this.subStat4.value.statType === subStat.statType);
   }
 
   setMainStats(): void {

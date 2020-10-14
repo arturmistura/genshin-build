@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Character } from 'src/app/models/character';
 import { Weapon } from 'src/app/models/weapon';
@@ -11,14 +11,10 @@ import { DataService } from 'src/app/services/data-service';
   styleUrls: ['./team-build.component.scss']
 })
 export class TeamBuildComponent implements OnInit {
+  @Input() parentForm: FormGroup;
+
   characters: Observable<Character[]>;
-  selectedCharacter: Character = new Character();
-
   weapons: Weapon[];
-  selectedWeapon: Weapon = new Weapon();
-
-  suggestedTeam = new FormControl();
-  suggestedTeamSelected: Character[];
 
   constructor(private dataService: DataService) { }
 
@@ -26,10 +22,22 @@ export class TeamBuildComponent implements OnInit {
     this.characters = this.dataService.getCharacters();
   }
 
+  get character(): AbstractControl {
+    return this.parentForm.controls.character;
+  }
+
+  get weapon(): AbstractControl {
+    return this.parentForm.controls.weapon;
+  }
+
+  get team(): AbstractControl {
+    return this.parentForm.controls.team;
+  }
+
   changeMainCharacter(): void {
-    if (this.selectedCharacter != null) {
+    if (this.character.value != null) {
       this.dataService.getWeapons().subscribe(weapons => {
-        this.weapons = weapons.filter(weapon => weapon.weaponType === this.selectedCharacter.weaponType);
+        this.weapons = weapons.filter(weapon => weapon.weaponType === this.character.value.weaponType);
       });
     } else {
       this.weapons = [];
@@ -45,18 +53,16 @@ export class TeamBuildComponent implements OnInit {
   }
 
   suggestedTeamChanged(): void {
-    if (this.suggestedTeam.value.length <= 3) {
-      this.suggestedTeamSelected = this.suggestedTeam.value;
-    } else {
-      this.suggestedTeam.setValue(this.suggestedTeamSelected);
+    if (this.team.value.length >= 3) {
+      this.team.setValue(this.team.value);
     }
   }
 
   canSelect(character: Character): boolean {
-    return (this.suggestedTeamSelected != null &&
-      this.suggestedTeamSelected.length >= 3 &&
-      this.suggestedTeamSelected.findIndex(item => item.id === character.id) === -1) ||
-      (this.selectedCharacter != null &&
-        this.selectedCharacter.id === character.id);
+    return (this.team.value != null &&
+      this.team.value.length >= 3 &&
+      this.team.value.findIndex(item => item.id === character.id) === -1) ||
+      (this.team.value != null && this.team.value.id === character.id) ||
+      (character.id === this.character.value.id);
   }
 }

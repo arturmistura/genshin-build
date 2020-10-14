@@ -1,23 +1,21 @@
-<mat-card>
+<mat-card [formGroup]="parentForm">
   <mat-card-content>
-    <mat-grid-list cols="4" rowHeight="100px" gutterSize="15">
-      <mat-grid-tile [rowspan]="2">
+    <mat-grid-list cols="3" rowHeight="100px" gutterSize="15">
+      <mat-grid-tile>
         <mat-form-field appearance="outline">
           <mat-label>Main stat</mat-label>
-          <mat-select [(ngModel)]="selectedMainStat">
+          <mat-select formControlName="mainStat">
             <mat-option>--Select--</mat-option>
-            <mat-option *ngFor="let mainStat of mainStats" [value]="mainStat">
-              {{ mainStat.name }}
+            <mat-option *ngFor="let ms of mainStats" [value]="ms">
+              {{ ms.name }}
             </mat-option>
           </mat-select>
         </mat-form-field>
       </mat-grid-tile>
-      <mat-grid-tile [rowspan]="2">
-      </mat-grid-tile>
       <mat-grid-tile>
         <mat-form-field class="select-main-stat" appearance="outline">
           <mat-label>Sub Stat 1</mat-label>
-          <mat-select (selectionChange)="selectSubStat($event.value, 0)">
+          <mat-select formControlName="subStat1">
             <mat-option>--Select--</mat-option>
             <mat-option *ngFor="let subStat of subStats" [value]="subStat" [disabled]="hasSubStat(subStat)">
               {{ subStat.name }}
@@ -28,7 +26,7 @@
       <mat-grid-tile>
         <mat-form-field class="select-main-stat" appearance="outline">
           <mat-label>Sub Stat 2</mat-label>
-          <mat-select (selectionChange)="selectSubStat($event.value, 1)">
+          <mat-select formControlName="subStat2">
             <mat-option>--Select--</mat-option>
             <mat-option *ngFor="let subStat of subStats" [value]="subStat" [disabled]="hasSubStat(subStat)">
               {{ subStat.name }}
@@ -38,8 +36,19 @@
       </mat-grid-tile>
       <mat-grid-tile>
         <mat-form-field class="select-main-stat" appearance="outline">
+          <mat-label>Set</mat-label>
+          <mat-select formControlName="artefactSet">
+            <mat-option>--Select--</mat-option>
+            <mat-option *ngFor="let s of artefactSets" [value]="s">
+              {{ s.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field class="select-main-stat" appearance="outline">
           <mat-label>Sub Stat 3</mat-label>
-          <mat-select (selectionChange)="selectSubStat($event.value, 2)">
+          <mat-select formControlName="subStat3">
             <mat-option>--Select--</mat-option>
             <mat-option *ngFor="let subStat of subStats" [value]="subStat" [disabled]="hasSubStat(subStat)">
               {{ subStat.name }}
@@ -50,7 +59,7 @@
       <mat-grid-tile>
         <mat-form-field class="select-main-stat" appearance="outline">
           <mat-label>Sub Stat 4</mat-label>
-          <mat-select (selectionChange)="selectSubStat($event.value, 3)">
+          <mat-select formControlName="subStat4">
             <mat-option>--Select--</mat-option>
             <mat-option *ngFor="let subStat of subStats" [value]="subStat" [disabled]="hasSubStat(subStat)">
               {{ subStat.name }}

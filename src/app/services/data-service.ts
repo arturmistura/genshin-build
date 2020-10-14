@@ -5,13 +5,14 @@ import { Build } from '../models/build';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
+import { ArtefactSet } from '../models/artefact-set';
 
 @Injectable()
 export class DataService {
 
   private REST_API_SERVER = 'https://localhost:5001/';
   httpPostOptions = {
-    headers: new HttpHeaders({'Content-Type': 'application/json'})
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
 
   constructor(private httpClient: HttpClient) { }
@@ -28,11 +29,20 @@ export class DataService {
     return this.httpClient.get<Stat[]>(this.REST_API_SERVER + 'stat');
   }
 
+  getArtefactSets(): Observable<ArtefactSet[]> {
+    return this.httpClient.get<ArtefactSet[]>(this.REST_API_SERVER + 'artefactSet');
+  }
+
   getBuilds(): Observable<Build[]> {
     return this.httpClient.get<Build[]>(this.REST_API_SERVER + 'build');
   }
 
   filterBuilds(filter: Build): Observable<Build[]> {
     return this.httpClient.post<Build[]>(this.REST_API_SERVER + 'build/filter', JSON.stringify(filter), this.httpPostOptions);
+  }
+
+  saveBuild(build: Build): void {
+    this.httpClient.post(this.REST_API_SERVER + 'build', build, this.httpPostOptions)
+      .subscribe();
   }
 }

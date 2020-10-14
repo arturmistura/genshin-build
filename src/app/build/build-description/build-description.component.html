@@ -1,15 +1,12 @@
-<mat-grid-list cols="4">
+<mat-grid-list cols="4" [formGroup]="parentForm">
   <mat-card-title>Describe your build</mat-card-title>
   <mat-grid-tile>
     <mat-form-field>
       <mat-label>Give a name to your build</mat-label>
-      <input matInput type="text" [(ngModel)]="name">
-      <button mat-button *ngIf="name" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
-        <mat-icon>close</mat-icon>
-      </button>
+      <input matInput type="text" formControlName="name">
     </mat-form-field>
   </mat-grid-tile>
   <mat-grid-tile>
-    <textarea></textarea>
+    <textarea formControlName="description"></textarea>
   </mat-grid-tile>
 </mat-grid-list>

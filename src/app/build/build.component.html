@@ -1,56 +1,56 @@
 <mat-sidenav-container>
   <mat-sidenav class="character-status" mode="side" opened>
-    <app-list-build></app-list-build>
+    <app-list-build [builds]="builds"></app-list-build>
   </mat-sidenav>
   <mat-sidenav-content>
-    <mat-card>
-      <app-build-description>
-        
-      </app-build-description>
-    </mat-card>
-    <mat-card class="card-character">
-      <app-team-build></app-team-build>
-    </mat-card>
-    <mat-divider></mat-divider>
-    <mat-card>
-      <mat-card-title>Artefacts</mat-card-title>
-      <mat-tab-group>
-        <mat-tab label="Flower of Life">
-          <ng-template mat-tab-label>
-            <img class="slot-tab" width="50" height="50" src="./../assets/images/artefacts/flower_of_life.png">
-          </ng-template>
-          <app-artefact-build [artefactType]="1"></app-artefact-build>
-        </mat-tab>
+    <form [formGroup]="buildForm" (ngSubmit)="saveBuild()">
+      <mat-card>
+        <app-build-description [parentForm]="buildForm"></app-build-description>
+      </mat-card>
+      <mat-card class="card-character">
+        <app-team-build [parentForm]="buildForm"></app-team-build>
+      </mat-card>
+      <mat-divider></mat-divider>
+      <mat-card>
+        <mat-card-title>Artefacts</mat-card-title>
+        <mat-tab-group>
+          <mat-tab label="Flower of Life">
+            <ng-template mat-tab-label>
+              <img class="slot-tab" width="50" height="50" src="./../assets/images/artefacts/flower_of_life.png">
+            </ng-template>
+            <app-artefact-build [artefactType]="1" [parentForm]="flowerOfLife"></app-artefact-build>
+          </mat-tab>
 
-        <mat-tab label="Plume of Death">
-          <ng-template mat-tab-label>
-            <img class="slot-tab" width="50" height="50" src="./../assets/images/artefacts/plume_of_death.png">
-          </ng-template>
-          <app-artefact-build [artefactType]="2"></app-artefact-build>
-        </mat-tab>
+          <mat-tab label="Plume of Death">
+            <ng-template mat-tab-label>
+              <img class="slot-tab" width="50" height="50" src="./../assets/images/artefacts/plume_of_death.png">
+            </ng-template>
+            <app-artefact-build [artefactType]="2" [parentForm]="plumeOfDeath"></app-artefact-build>
+          </mat-tab>
 
-        <mat-tab label="Sands of Eon">
-          <ng-template mat-tab-label>
-            <img class="slot-tab" width="50" height="50" src="./../assets/images/artefacts/sands_of_eon.png">
-          </ng-template>
-          <app-artefact-build [artefactType]="3"></app-artefact-build>
-        </mat-tab>
+          <mat-tab label="Sands of Eon">
+            <ng-template mat-tab-label>
+              <img class="slot-tab" width="50" height="50" src="./../assets/images/artefacts/sands_of_eon.png">
+            </ng-template>
+            <app-artefact-build [artefactType]="3" [parentForm]="sandsOfEon"></app-artefact-build>
+          </mat-tab>
 
-        <mat-tab label="Goblet of Enotherm">
-          <ng-template mat-tab-label>
-            <img class="slot-tab" width="50" height="50" src="./../assets/images/artefacts/goblet_of_enotherm.png">
-          </ng-template>
-          <app-artefact-build [artefactType]="4"></app-artefact-build>
-        </mat-tab>
+          <mat-tab label="Goblet of Enotherm">
+            <ng-template mat-tab-label>
+              <img class="slot-tab" width="50" height="50" src="./../assets/images/artefacts/goblet_of_enotherm.png">
+            </ng-template>
+            <app-artefact-build [artefactType]="4" [parentForm]="gobletOfEnotherm"></app-artefact-build>
+          </mat-tab>
 
-        <mat-tab label="Circle of Logos">
-          <ng-template mat-tab-label>
-            <img class="slot-tab" width="50" height="50" src="./../assets/images/artefacts/circle_of_logos.png">
-          </ng-template>
-          <app-artefact-build [artefactType]="5"></app-artefact-build>
-        </mat-tab>
-      </mat-tab-group>
-    </mat-card>
+          <mat-tab label="Circle of Logos">
+            <ng-template mat-tab-label>
+              <img class="slot-tab" width="50" height="50" src="./../assets/images/artefacts/circle_of_logos.png">
+            </ng-template>
+            <app-artefact-build [artefactType]="5" [parentForm]="circletOfLogos"></app-artefact-build>
+          </mat-tab>
+        </mat-tab-group>
+      </mat-card>
+      <button type="submit" class="button">Save</button>
+    </form>
   </mat-sidenav-content>
 </mat-sidenav-container>
-
