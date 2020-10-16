@@ -6,11 +6,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { ArtefactSet } from '../models/artefact-set';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class DataService {
 
-  private REST_API_SERVER = 'https://localhost:5001/';
   httpPostOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
@@ -18,31 +18,31 @@ export class DataService {
   constructor(private httpClient: HttpClient) { }
 
   getWeapons(): Observable<Weapon[]> {
-    return this.httpClient.get<Weapon[]>(this.REST_API_SERVER + 'weapon');
+    return this.httpClient.get<Weapon[]>(environment.apiUrl + 'weapon');
   }
 
   getCharacters(): Observable<Character[]> {
-    return this.httpClient.get<Character[]>(this.REST_API_SERVER + 'character');
+    return this.httpClient.get<Character[]>(environment.apiUrl + 'character');
   }
 
   getStats(): Observable<Stat[]> {
-    return this.httpClient.get<Stat[]>(this.REST_API_SERVER + 'stat');
+    return this.httpClient.get<Stat[]>(environment.apiUrl + 'stat');
   }
 
   getArtefactSets(): Observable<ArtefactSet[]> {
-    return this.httpClient.get<ArtefactSet[]>(this.REST_API_SERVER + 'artefactSet');
+    return this.httpClient.get<ArtefactSet[]>(environment.apiUrl + 'artefactSet');
   }
 
   getBuilds(): Observable<Build[]> {
-    return this.httpClient.get<Build[]>(this.REST_API_SERVER + 'build');
+    return this.httpClient.get<Build[]>(environment.apiUrl + 'build');
   }
 
   filterBuilds(filter: Build): Observable<Build[]> {
-    return this.httpClient.post<Build[]>(this.REST_API_SERVER + 'build/filter', JSON.stringify(filter), this.httpPostOptions);
+    return this.httpClient.post<Build[]>(environment.apiUrl + 'build/filter', JSON.stringify(filter), this.httpPostOptions);
   }
 
   saveBuild(build: Build): void {
-    this.httpClient.post(this.REST_API_SERVER + 'build', build, this.httpPostOptions)
+    this.httpClient.post(environment.apiUrl + 'build', build, this.httpPostOptions)
       .subscribe();
   }
 }

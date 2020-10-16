@@ -27,7 +27,7 @@ import { BuildDescriptionComponent } from './build/build-description/build-descr
     BuildDescriptionComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     AppRoutingModule,
     BrowserAnimationsModule,
     AngularMaterialModule,

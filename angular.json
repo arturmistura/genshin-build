@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/genshin-build",
+            "outputPath": "dist/genshin-build/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -61,6 +61,14 @@
                   "maximumError": "10kb"
                 }
               ]
+            },
+            "staging": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.staging.ts"
+                }
+              ]
             }
           }
         },
@@ -72,6 +80,9 @@
           "configurations": {
             "production": {
               "browserTarget": "genshin-build:build:production"
+            },
+            "staging": {
+              "browserTarget": "genshin-build:build:staging"
             }
           }
         },
@@ -105,7 +116,8 @@
             "tsConfig": [
               "tsconfig.app.json",
               "tsconfig.spec.json",
-              "e2e/tsconfig.json"
+              "e2e/tsconfig.json",
+              "tsconfig.server.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -121,11 +133,80 @@
           "configurations": {
             "production": {
               "devServerTarget": "genshin-build:serve:production"
+            },
+            "staging": {
+              "devServerTarget": "genshin-build:serve:staging"
             }
+          }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/genshin-build/server",
+            "main": "server.ts",
+            "tsConfig": "tsconfig.server.json"
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "media",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "sourceMap": false,
+              "optimization": true
+            },
+            "staging": {
+              "outputHashing": "media",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.staging.ts"
+                }
+              ],
+              "sourceMap": false,
+              "optimization": true
+            }
+          }
+        },
+        "serve-ssr": {
+          "builder": "@nguniversal/builders:ssr-dev-server",
+          "options": {
+            "browserTarget": "genshin-build:build",
+            "serverTarget": "genshin-build:server"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "genshin-build:build:production",
+              "serverTarget": "genshin-build:server:production"
+            },
+            "staging": {
+              "browserTarget": "genshin-build:build:staging",
+              "serverTarget": "genshin-build:server:staging"
+            }
+          }
+        },
+        "prerender": {
+          "builder": "@nguniversal/builders:prerender",
+          "options": {
+            "browserTarget": "genshin-build:build:production",
+            "serverTarget": "genshin-build:server:production",
+            "routes": [
+              "/"
+            ]
+          },
+          "configurations": {
+            "production": {},
+            "staging": {}
           }
         }
       }
     }
   },
-  "defaultProject": "genshin-build"
+  "defaultProject": "genshin-build",
+  "cli": {
+    "analytics": "7fd850e7-3fdf-402c-ac59-32ec661533da"
+  }
 }

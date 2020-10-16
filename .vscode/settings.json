@@ -1,3 +1,9 @@
 {
-    "editor.detectIndentation": false
+    "editor.detectIndentation": false,
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/f2ef0cd8-40d0-4081-a5fb-a328d4043dc0/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/genshin-build",
+    "appService.deploySubpath": "."
 }
