@@ -1,3 +1,52 @@
+@import '~@angular/material/theming';
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// **Be sure that you only ever include this mixin once!**
+@include mat-core();
+
+
+/* For use in src/lib/core/theming/_palette.scss */
+$md-genshinbuild: (
+    50 : #e4e4e5,
+    100 : #bbbcbf,
+    200 : #8e9094,
+    300 : #616369,
+    400 : #3f4149,
+    500 : #1d2029,
+    600 : #1a1c24,
+    700 : #15181f,
+    800 : #111319,
+    900 : #0a0b0f,
+    A100 : #1d2029,
+    A200 : #15181f,
+    A400 : #111319,
+    A700 : #1d2029,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #ffffff,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #ffffff,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
+);
+
+$gb-palette-primary: mat-palette($md-genshinbuild);
+$gb-palette-accent: mat-palette($md-genshinbuild);
+
+$gb-theme: mat-dark-theme($gb-palette-primary, $gb-palette-accent);
+
+@include angular-material-theme($gb-theme);
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

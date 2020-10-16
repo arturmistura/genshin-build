@@ -16,7 +16,6 @@ export class CharacterSelectComponent implements OnInit {
   characters: Observable<Character[]>;
 
   allElements = [
-    // { label: 'All Elements', element: CharacterElement.All },
     { label: 'Anemo', element: CharacterElement.Anemo },
     { label: 'Cryo', element: CharacterElement.Cryo },
     { label: 'Electro', element: CharacterElement.Electro },

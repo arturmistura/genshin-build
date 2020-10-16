@@ -1,49 +1,20 @@
-<mat-card-title>Create your character build</mat-card-title>
-<mat-grid-list [cols]="3" rowHeight="150px" [formGroup]="parentForm">
-  <!-- <mat-grid-tile>
-    <mat-form-field appearance="outline">
-      <mat-label>Select your character: </mat-label>
-      <mat-select placeholder="Select your Character" formControlName="character" (selectionChange)="changeMainCharacter()">
-        <mat-select-trigger *ngIf="character.value != null">
-          <img width="50" height="50" src="{{ character.value.picture }}" />
-          <span>
-            {{ character.value.name }}</span>
-        </mat-select-trigger>
-        <mat-option>--Select--</mat-option>
-        <mat-option *ngFor="let character of characters | async" [value]="character">
-          <img width="50" height="50" src="{{ character.picture }}" />
-          {{ character.name }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </mat-grid-tile> -->
-  <mat-grid-tile>
-    <mat-form-field appearance="outline" *ngIf="character.value != null">
-      <mat-label>Select your weapon: </mat-label>
-      <mat-select formControlName="weapon">
-        <mat-select-trigger *ngIf="weapon.value != null">
-          <img width="40" height="40"
-            src="{{ weapon.value.picture }}" />
-          <span>
-            {{ weapon.value.name }}</span>
-        </mat-select-trigger>
-        <mat-option>--Select--</mat-option>
-        <mat-option *ngFor="let w of weapons" [value]="w">
-          <img width="40" height="40" src="{{ w.picture }}" />
-          {{ w.name }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </mat-grid-tile>
-  <mat-grid-tile>
-    <mat-form-field appearance="outline">
-      <mat-label>Select your suggested team: </mat-label>
-      <mat-select formControlName="team" multiple (selectionChange)="suggestedTeamChanged()">
-        <mat-option *ngFor="let c of characters | async" [value]="c" [disabled]="canSelect(c)">
-          <img width="50" height="50" src="{{ c.picture }}" />
-          {{ c.name }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+<mat-grid-list [cols]="6">
+  <mat-grid-tile *ngFor="let character of selectedCharacters; let i = index">
+    <div class="character-tile">
+      <img src="{{character.picture}}" title="{{character.name}}" (click)="removeTeamMember(character, i)">
+    </div>
   </mat-grid-tile>
 </mat-grid-list>
+<mat-divider></mat-divider>
+<mat-tab-group [formGroup]="parentForm">
+  <mat-tab *ngFor="let item of allElements" [label]="item.label">
+    <mat-grid-list [cols]="6">
+      <mat-grid-tile *ngFor="let character of filteredCharacters">
+        <div class="character-tile">
+          <img src="{{character.picture}}" title="{{character.name}}" (click)="selectTeamMember(character)">
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </mat-tab>
+</mat-tab-group>
+

@@ -1,0 +1,9 @@
+<mat-grid-list [cols]="6">
+  <mat-grid-tile *ngFor="let weapon of weapons; let i = index">
+    <div class="weapon-tile">
+      <span>{{weapon.name}}</span>
+      <img src="{{weapon.picture}}" height="150px" width="150px" title="{{weapon.name}}"
+        (click)="selectWeapon(weapon, i)" [ngClass]="{ 'selected-weapon': i === selectedIndex}">
+    </div>
+  </mat-grid-tile>
+</mat-grid-list>

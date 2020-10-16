@@ -17,6 +17,7 @@ import { SearchComponent } from './search/search.component';
 import { BuildDescriptionComponent } from './build/build-description/build-description.component';
 import { CharacterSelectComponent } from './build/character-select/character-select.component';
 import { CharacterPictureComponent } from './build/character-picture/character-picture.component';
+import { BuildWeaponComponent } from './build/build-weapon/build-weapon.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { CharacterPictureComponent } from './build/character-picture/character-p
     SearchComponent,
     BuildDescriptionComponent,
     CharacterSelectComponent,
-    CharacterPictureComponent
+    CharacterPictureComponent,
+    BuildWeaponComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

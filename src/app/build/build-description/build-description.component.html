@@ -1,5 +1,4 @@
-<mat-grid-list cols="4" [formGroup]="parentForm">
-  <mat-card-title>Describe your build</mat-card-title>
+<mat-grid-list [cols]="6" [formGroup]="parentForm">
   <mat-grid-tile>
     <mat-form-field>
       <mat-label>Give a name to your build</mat-label>
@@ -7,6 +6,12 @@
     </mat-form-field>
   </mat-grid-tile>
   <mat-grid-tile>
-    <textarea formControlName="description"></textarea>
+  </mat-grid-tile>
+  <mat-grid-tile colspan="4">
+    <mat-form-field>
+      <mat-label>Type some explanation to your build</mat-label>
+      <textarea matInput formControlName="description" cdkTextareaAutosize #autosize="cdkTextareaAutosize"
+        cdkAutosizeMinRows="5" cdkAutosizeMaxRows="10"></textarea>
+    </mat-form-field>
   </mat-grid-tile>
 </mat-grid-list>

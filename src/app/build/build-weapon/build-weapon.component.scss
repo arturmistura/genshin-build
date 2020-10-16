@@ -1,3 +1,7 @@
+.weapon-tile {
+  text-align: center;
+}
+
 img {
   padding-top: 15px;
   filter: gray;
@@ -9,11 +13,7 @@ img:hover {
   -webkit-filter: none;
 }
 
-.selected-character {
+.selected-weapon {
   filter: none;
   -webkit-filter: none;
-}
-
-.character-tile {
-  text-align: center;
 }

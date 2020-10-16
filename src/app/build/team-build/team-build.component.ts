@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Character } from 'src/app/models/character';
+import { CharacterElement } from 'src/app/models/character-element';
 import { Weapon } from 'src/app/models/weapon';
 import { DataService } from 'src/app/services/data-service';
 
@@ -13,16 +14,23 @@ import { DataService } from 'src/app/services/data-service';
 export class TeamBuildComponent implements OnInit {
   @Input() parentForm: FormGroup;
 
-  characters: Observable<Character[]>;
-  weapons: Weapon[];
+  filteredCharacters: Character[];
+  selectedCharacters: Character[] = [];
+
+  allElements = [
+    { label: 'Anemo', element: CharacterElement.Anemo },
+    { label: 'Cryo', element: CharacterElement.Cryo },
+    { label: 'Electro', element: CharacterElement.Electro },
+    { label: 'Geo', element: CharacterElement.Geo },
+    { label: 'Hydro', element: CharacterElement.Hydro },
+    { label: 'Pyro', element: CharacterElement.Pyro },
+  ];
 
   constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
-    this.characters = this.dataService.getCharacters();
-
-    this.character.valueChanges.subscribe(() => {
-      this.changeMainCharacter();
+    this.dataService.getCharacters().subscribe(characters => {
+      this.filteredCharacters = characters;
     });
   }
 
@@ -30,36 +38,19 @@ export class TeamBuildComponent implements OnInit {
     return this.parentForm.controls.character;
   }
 
-  get weapon(): AbstractControl {
-    return this.parentForm.controls.weapon;
-  }
-
   get team(): AbstractControl {
     return this.parentForm.controls.team;
   }
 
-  changeMainCharacter(): void {
-    if (this.character.value != null) {
-      this.dataService.getWeapons().subscribe(weapons => {
-        this.weapons = weapons.filter(weapon => weapon.weaponType === this.character.value.weaponType);
-      });
-    } else {
-      this.weapons = [];
+  selectTeamMember(character: Character): void {
+    if (this.selectedCharacters.length < 3) {
+      this.selectedCharacters.push(character);
+    }else {
+      this.team.setValue(this.selectedCharacters);
     }
   }
-
-  formatImageName(weaponName: string): string {
-    if (weaponName != null) {
-      return weaponName.replace(' ', '_');
-    }
-
-    return '';
-  }
-
-  suggestedTeamChanged(): void {
-    if (this.team.value.length >= 3) {
-      this.team.setValue(this.team.value);
-    }
+  removeTeamMember(character: Character): void {
+    this.selectedCharacters = this.selectedCharacters.filter(c => c.id !== character.id);
   }
 
   canSelect(character: Character): boolean {

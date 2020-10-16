@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { Build } from '../models/build';
@@ -12,8 +12,6 @@ import { DataService } from '../services/data-service';
 })
 export class BuildComponent implements OnInit {
   buildForm: FormGroup;
-
-  builds: Observable<Build[]>;
 
   constructor(public dataService: DataService,
     public fb: FormBuilder,
@@ -68,7 +66,11 @@ export class BuildComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.refreshBuilds();
+
+  }
+
+  get character(): AbstractControl {
+    return this.buildForm.get('character');
   }
 
   get flowerOfLife(): FormGroup {
@@ -99,13 +101,8 @@ export class BuildComponent implements OnInit {
     if (this.buildForm.valid) {
       const build = this.buildForm.value as Build;
       this.dataService.saveBuild(build);
-      this.refreshBuilds();
     } else {
       this.openSnackBarValidation();
     }
-  }
-
-  refreshBuilds(): void {
-    this.builds = this.dataService.getBuilds();
   }
 }
