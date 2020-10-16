@@ -4,6 +4,7 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <form [formGroup]="buildForm" (ngSubmit)="saveBuild()">
+      <app-character-select [parentForm]="buildForm"></app-character-select>
       <mat-card>
         <app-build-description [parentForm]="buildForm"></app-build-description>
       </mat-card>

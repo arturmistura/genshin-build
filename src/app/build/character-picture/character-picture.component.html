@@ -1,0 +1,7 @@
+<mat-grid-list [cols]="6">
+  <mat-grid-tile *ngFor="let character of filteredCharacters; let i = index">
+    <div class="background-picture">
+      <img src="{{character.picture}}" (click)="selectCharacter(character, i)" [ngClass]="{ 'selected-character': i === selectedIndex}">
+    </div>
+  </mat-grid-tile>
+</mat-grid-list>

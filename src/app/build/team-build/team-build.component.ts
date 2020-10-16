@@ -20,6 +20,10 @@ export class TeamBuildComponent implements OnInit {
 
   ngOnInit(): void {
     this.characters = this.dataService.getCharacters();
+
+    this.character.valueChanges.subscribe(() => {
+      this.changeMainCharacter();
+    });
   }
 
   get character(): AbstractControl {

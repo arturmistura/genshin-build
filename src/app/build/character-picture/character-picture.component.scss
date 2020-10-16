@@ -1,0 +1,20 @@
+img {
+  filter: gray;
+  -webkit-filter: grayscale(100%);
+}
+
+img:hover {
+  filter: none;
+  -webkit-filter: none;
+}
+
+.selected-character {
+  filter: none;
+  -webkit-filter: none;
+}
+
+.background-picture {
+  // padding: 10px 20px 0 20px;
+  // border: 1px solid red;
+  // background-color: gray;
+}

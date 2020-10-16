@@ -1,6 +1,6 @@
 <mat-card-title>Create your character build</mat-card-title>
 <mat-grid-list [cols]="3" rowHeight="150px" [formGroup]="parentForm">
-  <mat-grid-tile>
+  <!-- <mat-grid-tile>
     <mat-form-field appearance="outline">
       <mat-label>Select your character: </mat-label>
       <mat-select placeholder="Select your Character" formControlName="character" (selectionChange)="changeMainCharacter()">
@@ -16,7 +16,7 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-  </mat-grid-tile>
+  </mat-grid-tile> -->
   <mat-grid-tile>
     <mat-form-field appearance="outline" *ngIf="character.value != null">
       <mat-label>Select your weapon: </mat-label>
