@@ -1,3 +1,8 @@
 .character-tile {
   text-align: center;
 }
+
+.cant-select {
+  filter: gray;
+  -webkit-filter: grayscale(100%);
+}

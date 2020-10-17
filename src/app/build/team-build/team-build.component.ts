@@ -18,19 +18,21 @@ export class TeamBuildComponent implements OnInit {
   selectedCharacters: Character[] = [];
 
   allElements = [
-    { label: 'Anemo', element: CharacterElement.Anemo },
-    { label: 'Cryo', element: CharacterElement.Cryo },
-    { label: 'Electro', element: CharacterElement.Electro },
-    { label: 'Geo', element: CharacterElement.Geo },
-    { label: 'Hydro', element: CharacterElement.Hydro },
-    { label: 'Pyro', element: CharacterElement.Pyro },
+    { label: 'Anemo', element: CharacterElement.Anemo, characters: [] },
+    { label: 'Cryo', element: CharacterElement.Cryo, characters: [] },
+    { label: 'Electro', element: CharacterElement.Electro, characters: [] },
+    { label: 'Geo', element: CharacterElement.Geo, characters: [] },
+    { label: 'Hydro', element: CharacterElement.Hydro, characters: [] },
+    { label: 'Pyro', element: CharacterElement.Pyro, characters: [] },
   ];
 
   constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
     this.dataService.getCharacters().subscribe(characters => {
-      this.filteredCharacters = characters;
+      this.allElements.forEach(item => {
+        item.characters = characters.filter(a => a.characterElement === item.element);
+      });
     });
   }
 
@@ -43,21 +45,23 @@ export class TeamBuildComponent implements OnInit {
   }
 
   selectTeamMember(character: Character): void {
-    if (this.selectedCharacters.length < 3) {
-      this.selectedCharacters.push(character);
-    }else {
-      this.team.setValue(this.selectedCharacters);
+    if (this.canSelect(character)) {
+      if (this.selectedCharacters.length < 3) {
+        this.selectedCharacters.push(character);
+      }
     }
+
+    this.team.setValue(this.selectedCharacters);
   }
+
   removeTeamMember(character: Character): void {
     this.selectedCharacters = this.selectedCharacters.filter(c => c.id !== character.id);
   }
 
   canSelect(character: Character): boolean {
-    return (this.team.value != null &&
-      this.team.value.length >= 3 &&
-      this.team.value.findIndex(item => item.id === character.id) === -1) ||
-      (this.team.value != null && this.team.value.id === character.id) ||
-      (character.id === this.character.value.id);
+    return (this.selectedCharacters === null) ||
+      (this.selectedCharacters.length < 3 &&
+        this.selectedCharacters.findIndex(item => item.id === character.id) === -1 &&
+        character.id !== this.character.value.id);
   }
 }

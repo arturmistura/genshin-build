@@ -1,23 +1,28 @@
 <form [formGroup]="buildForm" (ngSubmit)="saveBuild()">
   <!-- CHARACTER -->
   <mat-card>
+    <mat-card-title>Select your character</mat-card-title>
     <app-character-select [parentForm]="buildForm"></app-character-select>
   </mat-card>
   <mat-divider></mat-divider>
 
   <!-- CHARACTER -->
-  <mat-card [hidden]="character.invalid">
+  <mat-card  [hidden]="character.invalid">
+    <mat-card-title>Select your weapon</mat-card-title>
     <app-build-weapon [parentForm]="buildForm"></app-build-weapon>
   </mat-card>
+  <mat-divider></mat-divider>
 
   <!-- TEAM -->
   <mat-card>
+    <mat-card-title>Select your team</mat-card-title>
     <app-team-build [parentForm]="buildForm"></app-team-build>
   </mat-card>
   <mat-divider></mat-divider>
 
   <!-- DESCRIPTION -->
   <mat-card>
+    <mat-card-title>Create a name and description to your build</mat-card-title>
     <app-build-description [parentForm]="buildForm"></app-build-description>
   </mat-card>
   <mat-divider></mat-divider>
@@ -62,5 +67,7 @@
       </mat-tab>
     </mat-tab-group>
   </mat-card>
-  <button type="submit" class="button">Save</button>
+  <mat-card>
+    <button type="submit" mat-flat-button color="primary">Save</button>
+  </mat-card>
 </form>

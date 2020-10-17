@@ -1,4 +1,4 @@
-<mat-grid-list [cols]="6">
+<mat-grid-list [cols]="3" rowHeight="200px" *ngIf="selectedCharacters != null && selectedCharacters.length > 0">
   <mat-grid-tile *ngFor="let character of selectedCharacters; let i = index">
     <div class="character-tile">
       <img src="{{character.picture}}" title="{{character.name}}" (click)="removeTeamMember(character, i)">
@@ -8,13 +8,13 @@
 <mat-divider></mat-divider>
 <mat-tab-group [formGroup]="parentForm">
   <mat-tab *ngFor="let item of allElements" [label]="item.label">
-    <mat-grid-list [cols]="6">
-      <mat-grid-tile *ngFor="let character of filteredCharacters">
+    <mat-grid-list [cols]="8">
+      <mat-grid-tile *ngFor="let character of item.characters">
         <div class="character-tile">
-          <img src="{{character.picture}}" title="{{character.name}}" (click)="selectTeamMember(character)">
+          <img src="{{character.picture}}" title="{{character.name}}"
+            [ngClass]="{ 'cant-select': !canSelect(character)}" (click)="selectTeamMember(character)">
         </div>
       </mat-grid-tile>
     </mat-grid-list>
   </mat-tab>
 </mat-tab-group>
-
