@@ -1,0 +1,16 @@
+<div class="header">
+  <mat-icon (click)="close()">close</mat-icon>
+</div>
+
+<div class="content" *ngFor="let set of sets" class="set">
+  <span class="name">{{set.name}}</span>
+  <p class="bonus" *ngFor="let bonus of set.bonus">
+    <span class="pieces">
+      {{bonus.numberOfPieces}} pieces
+    </span>
+    <br />
+    <span class="description">
+      {{bonus.description}}
+    </span>
+  </p>
+</div>

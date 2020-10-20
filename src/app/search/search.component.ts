@@ -1,5 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Build } from '../models/build';
 import { Character } from '../models/character';
@@ -25,7 +26,9 @@ export class SearchComponent implements OnInit {
   buildColumns: string[] = ['character', 'name', 'votes', 'votes-icon', 'actions'];
   buildExpanded: Build | null;
 
-  constructor(private dataService: DataService) { }
+  constructor(
+    private dataService: DataService,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.characters = this.dataService.getCharacters();
@@ -34,11 +37,13 @@ export class SearchComponent implements OnInit {
 
   selectCharacterFilter(): void {
     if (this.selectedCharacter != null && this.selectedCharacter.id != null) {
-      const filter = new Build();
-      filter.character = this.selectedCharacter;
-      this.builds = this.dataService.filterBuilds(filter);
+      this.builds = this.dataService.getBuildByCharacter(this.selectedCharacter);
     } else {
       this.builds = this.dataService.getBuilds();
     }
+  }
+
+  detailBuild(build: Build): void {
+    this.router.navigate(['build/details', build.id ]);
   }
 }

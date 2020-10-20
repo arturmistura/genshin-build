@@ -1,0 +1,30 @@
+.header {
+  float: right;
+
+  mat-icon {
+    cursor: pointer;
+  }
+}
+
+
+.set {
+  margin-left: 15px;
+  margin-right: 15px;
+
+  .name {
+    font-size: 22px;
+    text-decoration: underline;
+  }
+}
+
+.bonus {
+  font-size: 14px;
+  width: 100%;
+  text-align: left;
+  margin: 0 0 10px 0;
+
+  .pieces {
+    font-size: 16px;
+    font-weight: bold;
+  }
+}

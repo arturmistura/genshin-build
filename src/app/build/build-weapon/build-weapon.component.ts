@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Observable } from 'rxjs';
 import { Weapon } from 'src/app/models/weapon';
 import { DataService } from 'src/app/services/data-service';
 

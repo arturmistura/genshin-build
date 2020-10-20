@@ -68,7 +68,7 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef>Actions</th>
         <td mat-cell *matCellDef="let build">
-          <mat-icon aria-hidden="false" aria-label="icon">visibility</mat-icon>
+          <mat-icon style="cursor: pointer;" aria-hidden="false" aria-label="icon" (click)="detailBuild(build)">visibility</mat-icon>
         </td>
       </ng-container>
 

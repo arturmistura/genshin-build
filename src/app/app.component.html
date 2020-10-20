@@ -1,25 +1,36 @@
-<mat-toolbar color="primary">
-  <mat-icon *ngIf="sidenavOpened" aria-hidden="false" aria-label="icon" (click)="toggleSidenav()">menu_open</mat-icon>
-  <mat-icon *ngIf="!sidenavOpened" aria-hidden="false" aria-label="icon" (click)="toggleSidenav()">menu</mat-icon>
-  <span>Genshin Build</span>
-  <div class="card-block">
-    <button class="btn btn-social-icon btn-facebook" (click)="signInWithFacebook()">
-      <span class="fa fa-facebook"></span>
+<mat-toolbar>
+  <button mat-icon-button>
+    <mat-icon *ngIf="user && user.email" (click)="toggleSidenav()">menu</mat-icon>
+  </button>
+  <img height="60px" style="cursor: pointer;" src="../assets/images/logo_transparent.png" (click)="redirectToHome()">
+  <span class="spacer"></span>
+  <mat-icon *ngIf="!user" (click)="signInWithFacebook()">facebook</mat-icon>
+  <div *ngIf="user && user.email">
+    <span cla="user-name">{{user.name}}</span>
+    <button mat-icon-button [matMenuTriggerFor]="menu" class="icon-menu">
+      <mat-icon>more_vert</mat-icon>
     </button>
-  </div>
-  <div *ngIf="user != null">
-    <span>{{user.name}}</span>
-    <span>{{user.email}}</span>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="redirectToBuilds()">
+        <mat-icon>build_circle</mat-icon>
+        <span>Builds</span>
+      </button>
+      <mat-divider></mat-divider>
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>exit_to_app</mat-icon>
+        <span>Logout</span>
+      </button>
+    </mat-menu>
   </div>
 </mat-toolbar>
 
 <mat-sidenav-container>
-  <mat-sidenav mode="side" [(opened)]="sidenavOpened">
-    <app-list-build [builds]="builds"></app-list-build>
+  <mat-sidenav *ngIf="user && user.email" mode="side" [(opened)]="sidenavOpened">
+    <app-list-build></app-list-build>
   </mat-sidenav>
   <mat-sidenav-content>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
 
-<mat-toolbar color="primary"> </mat-toolbar>
+<mat-toolbar color="primary"></mat-toolbar>

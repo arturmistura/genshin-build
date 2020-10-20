@@ -1,6 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, NgZone, OnInit } from '@angular/core';
+import { SocialUser } from 'angularx-social-login';
 import { Observable } from 'rxjs';
 import { Build } from 'src/app/models/build';
+import { Player } from 'src/app/models/player';
 import { DataService } from 'src/app/services/data-service';
 
 @Component({
@@ -9,17 +11,19 @@ import { DataService } from 'src/app/services/data-service';
   styleUrls: ['./list-build.component.scss']
 })
 export class ListBuildComponent implements OnInit {
-  @Input() builds: Observable<Build[]>;
-
-  picBasePathWeapon = 'https://rerollcdn.com/GENSHIN/Weapon/NEW/';
-  picBasePathCharacter = 'https://rerollcdn.com/GENSHIN/Characters/';
-  picExtension = '.png';
-
+  builds: Observable<Build[]>;
   buildColumns: string[] = ['character', 'name', 'votes', 'votes-icon', 'actions'];
 
-  constructor() { }
+  constructor(
+    public dataService: DataService,
+    public zone: NgZone) { }
 
   ngOnInit(): void {
+    this.zone.run(() => {
+      const owner = JSON.parse(localStorage.getItem('socialUser'));
+
+      this.builds = this.dataService.getBuildByPlayer(owner);
+    });
   }
 
 }

@@ -4,9 +4,12 @@ import { Stat } from '../models/stat';
 import { Build } from '../models/build';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { ArtefactSet } from '../models/artefact-set';
 import { environment } from '../../environments/environment';
+import { SocialUser } from 'angularx-social-login';
+import { Player } from '../models/player';
 
 @Injectable()
 export class DataService {
@@ -37,8 +40,16 @@ export class DataService {
     return this.httpClient.get<Build[]>(environment.apiUrl + 'build');
   }
 
-  filterBuilds(filter: Build): Observable<Build[]> {
-    return this.httpClient.post<Build[]>(environment.apiUrl + 'build/filter', JSON.stringify(filter), this.httpPostOptions);
+  getBuildById(id: string): Observable<Build> {
+    return this.httpClient.get<Build>(environment.apiUrl + 'build/' + id);
+  }
+
+  getBuildByPlayer(owner: Player): Observable<Build[]> {
+    return this.httpClient.post<Build[]>(environment.apiUrl + 'build/filter/owner', JSON.stringify(owner), this.httpPostOptions);
+  }
+
+  getBuildByCharacter(character: Character): Observable<Build[]> {
+    return this.httpClient.post<Build[]>(environment.apiUrl + 'build/filter/character', JSON.stringify(character), this.httpPostOptions);
   }
 
   saveBuild(build: Build): void {

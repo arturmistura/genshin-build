@@ -1,3 +1,4 @@
+import { SocialUser } from 'angularx-social-login';
 import { Artefact } from './artefact';
 import { Character } from './character';
 import { Weapon } from './weapon';
@@ -15,4 +16,5 @@ export class Build {
   circletOfLogos: Artefact;
   votes: number;
   team: Character[];
+  owner: SocialUser;
 }

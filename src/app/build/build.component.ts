@@ -13,7 +13,8 @@ import { DataService } from '../services/data-service';
 export class BuildComponent implements OnInit {
   buildForm: FormGroup;
 
-  constructor(public dataService: DataService,
+  constructor(
+    public dataService: DataService,
     public fb: FormBuilder,
     public snackBar: MatSnackBar) {
     this.buildForm = fb.group({
@@ -25,42 +26,42 @@ export class BuildComponent implements OnInit {
       flowerOfLife: new FormGroup({
         artefactSet: new FormControl('', [Validators.required]),
         mainStat: new FormControl('', [Validators.required]),
-        subStat1: new FormControl('', [Validators.required]),
-        subStat2: new FormControl('', [Validators.required]),
-        subStat3: new FormControl('', [Validators.required]),
-        subStat4: new FormControl('', [Validators.required])
+        subStat1: new FormControl(''),
+        subStat2: new FormControl(''),
+        subStat3: new FormControl(''),
+        subStat4: new FormControl('')
       }),
       plumeOfDeath: new FormGroup({
         artefactSet: new FormControl('', [Validators.required]),
         mainStat: new FormControl('', [Validators.required]),
-        subStat1: new FormControl('', [Validators.required]),
-        subStat2: new FormControl('', [Validators.required]),
-        subStat3: new FormControl('', [Validators.required]),
-        subStat4: new FormControl('', [Validators.required])
+        subStat1: new FormControl(''),
+        subStat2: new FormControl(''),
+        subStat3: new FormControl(''),
+        subStat4: new FormControl('')
       }),
       sandsOfEon: new FormGroup({
         artefactSet: new FormControl('', [Validators.required]),
         mainStat: new FormControl('', [Validators.required]),
-        subStat1: new FormControl('', [Validators.required]),
-        subStat2: new FormControl('', [Validators.required]),
-        subStat3: new FormControl('', [Validators.required]),
-        subStat4: new FormControl('', [Validators.required])
+        subStat1: new FormControl(''),
+        subStat2: new FormControl(''),
+        subStat3: new FormControl(''),
+        subStat4: new FormControl('')
       }),
       gobletOfEnotherm: new FormGroup({
         artefactSet: new FormControl('', [Validators.required]),
         mainStat: new FormControl('', [Validators.required]),
-        subStat1: new FormControl('', [Validators.required]),
-        subStat2: new FormControl('', [Validators.required]),
-        subStat3: new FormControl('', [Validators.required]),
-        subStat4: new FormControl('', [Validators.required])
+        subStat1: new FormControl(''),
+        subStat2: new FormControl(''),
+        subStat3: new FormControl(''),
+        subStat4: new FormControl('')
       }),
       circletOfLogos: new FormGroup({
         artefactSet: new FormControl('', [Validators.required]),
         mainStat: new FormControl('', [Validators.required]),
-        subStat1: new FormControl('', [Validators.required]),
-        subStat2: new FormControl('', [Validators.required]),
-        subStat3: new FormControl('', [Validators.required]),
-        subStat4: new FormControl('', [Validators.required])
+        subStat1: new FormControl(''),
+        subStat2: new FormControl(''),
+        subStat3: new FormControl(''),
+        subStat4: new FormControl('')
       }),
     });
   }
@@ -94,12 +95,13 @@ export class BuildComponent implements OnInit {
   }
 
   openSnackBarValidation(): void {
-    this.snackBar.open('There is some fields to fill before save :(');
+    this.snackBar.open('There is some fields to fill before save :(', );
   }
 
   saveBuild(): void {
     if (this.buildForm.valid) {
       const build = this.buildForm.value as Build;
+      build.owner = JSON.parse(localStorage.getItem('socialUser'));
       this.dataService.saveBuild(build);
     } else {
       this.openSnackBarValidation();

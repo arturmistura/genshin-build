@@ -1,13 +1,13 @@
 <mat-card>
   <mat-card-title>
-    Saved builds
+    My saved builds
   </mat-card-title>
   <mat-card-content>
     <table mat-table [dataSource]="builds" class="mat-elevation-z8">
       <ng-container matColumnDef="character">
         <th mat-header-cell *matHeaderCellDef>Character</th>
         <td mat-cell *matCellDef="let build">
-          <img height="50" width="50" src="{{ picBasePathCharacter + build.character.name + picExtension }}">
+          <img height="50" width="50" src="{{ build.character.picture }}">
         </td>
       </ng-container>
 

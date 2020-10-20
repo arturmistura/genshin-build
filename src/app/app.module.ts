@@ -18,6 +18,9 @@ import { BuildDescriptionComponent } from './build/build-description/build-descr
 import { CharacterSelectComponent } from './build/character-select/character-select.component';
 import { CharacterPictureComponent } from './build/character-picture/character-picture.component';
 import { BuildWeaponComponent } from './build/build-weapon/build-weapon.component';
+import { environment } from 'src/environments/environment';
+import { BuildDetailComponent } from './build/build-detail/build-detail.component';
+import { ArtefactSetDetailComponent } from './components/artefact-set-detail/artefact-set-detail.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +33,9 @@ import { BuildWeaponComponent } from './build/build-weapon/build-weapon.componen
     BuildDescriptionComponent,
     CharacterSelectComponent,
     CharacterPictureComponent,
-    BuildWeaponComponent
+    BuildWeaponComponent,
+    BuildDetailComponent,
+    ArtefactSetDetailComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -51,7 +56,7 @@ import { BuildWeaponComponent } from './build/build-weapon/build-weapon.componen
         providers: [
           {
             id: FacebookLoginProvider.PROVIDER_ID,
-            provider: new FacebookLoginProvider('344899230290601')
+            provider: new FacebookLoginProvider(environment.facebookAppId)
           },
         ]
       } as SocialAuthServiceConfig
