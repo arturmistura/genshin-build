@@ -52,8 +52,7 @@ export class DataService {
     return this.httpClient.post<Build[]>(environment.apiUrl + 'build/filter/character', JSON.stringify(character), this.httpPostOptions);
   }
 
-  saveBuild(build: Build): void {
-    this.httpClient.post(environment.apiUrl + 'build', build, this.httpPostOptions)
-      .subscribe();
+  saveBuild(build: Build): Observable<any> {
+    return this.httpClient.post(environment.apiUrl + 'build', build, this.httpPostOptions)
   }
 }

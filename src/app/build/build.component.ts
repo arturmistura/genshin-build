@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Build } from '../models/build';
 import { DataService } from '../services/data-service';
@@ -16,6 +17,7 @@ export class BuildComponent implements OnInit {
   constructor(
     public dataService: DataService,
     public fb: FormBuilder,
+    public router: Router,
     public snackBar: MatSnackBar) {
     this.buildForm = fb.group({
       name: new FormControl('', [Validators.required, Validators.maxLength(50)]),
@@ -102,7 +104,11 @@ export class BuildComponent implements OnInit {
     if (this.buildForm.valid) {
       const build = this.buildForm.value as Build;
       build.owner = JSON.parse(localStorage.getItem('socialUser'));
-      this.dataService.saveBuild(build);
+      this.dataService.saveBuild(build).subscribe(result => {
+        this.buildForm.reset();
+        this.snackBar.open('Your build is saved :)');
+        this.router.navigate(['/']);
+      });
     } else {
       this.openSnackBarValidation();
     }
