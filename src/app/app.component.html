@@ -1,12 +1,12 @@
 <mat-toolbar>
   <button mat-icon-button>
-    <mat-icon *ngIf="user && user.email" (click)="toggleSidenav()">menu</mat-icon>
+    <mat-icon *ngIf="player && player.email" (click)="toggleSidenav()">menu</mat-icon>
   </button>
   <img height="60px" style="cursor: pointer;" src="../assets/images/logo_transparent.png" (click)="redirectToHome()">
   <span class="spacer"></span>
-  <mat-icon *ngIf="!user" (click)="signInWithFacebook()">facebook</mat-icon>
-  <div *ngIf="user && user.email">
-    <span cla="user-name">{{user.name}}</span>
+  <mat-icon *ngIf="!player" (click)="signInWithFacebook()">facebook</mat-icon>
+  <div *ngIf="player && player.email">
+    <span cla="user-name">{{player.name}}</span>
     <button mat-icon-button [matMenuTriggerFor]="menu" class="icon-menu">
       <mat-icon>more_vert</mat-icon>
     </button>
@@ -25,7 +25,7 @@
 </mat-toolbar>
 
 <mat-sidenav-container>
-  <mat-sidenav *ngIf="user && user.email" mode="side" [(opened)]="sidenavOpened">
+  <mat-sidenav *ngIf="player && player.email" mode="side" [(opened)]="sidenavOpened">
     <app-list-build></app-list-build>
   </mat-sidenav>
   <mat-sidenav-content>

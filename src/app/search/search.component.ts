@@ -1,10 +1,13 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { SocialAuthService } from 'angularx-social-login';
 import { Observable } from 'rxjs';
 import { Build } from '../models/build';
 import { Character } from '../models/character';
+import { Player } from '../models/player';
 import { DataService } from '../services/data-service';
+import { PlayerService } from '../services/player-service';
 
 @Component({
   selector: 'app-search',
@@ -21,6 +24,7 @@ import { DataService } from '../services/data-service';
 export class SearchComponent implements OnInit {
   characters: Observable<Character[]>;
   selectedCharacter: Character = new Character();
+  player: Player;
 
   builds: Observable<Build[]>;
   buildColumns: string[] = ['character', 'name', 'votes', 'votes-icon', 'actions'];
@@ -28,9 +32,15 @@ export class SearchComponent implements OnInit {
 
   constructor(
     private dataService: DataService,
+    private playerService: PlayerService,
+    private authService: SocialAuthService,
     private router: Router) { }
 
   ngOnInit(): void {
+    this.player = this.playerService.getPlayer();
+    this.playerService.loggedPlayer.subscribe(player => {
+      this.player = player;
+    });
     this.characters = this.dataService.getCharacters();
     this.builds = this.dataService.getBuilds();
   }
@@ -45,5 +55,9 @@ export class SearchComponent implements OnInit {
 
   detailBuild(build: Build): void {
     this.router.navigate(['build/details', build.id ]);
+  }
+
+  redirectToCreateBuild(): void{
+    this.router.navigate(['build']);
   }
 }

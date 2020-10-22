@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FacebookLoginProvider, SocialAuthService, SocialUser } from 'angularx-social-login';
 import { Observable } from 'rxjs';
 import { Build } from './models/build';
+import { Player } from './models/player';
 import { DataService } from './services/data-service';
 import { PlayerService } from './services/player-service';
 
@@ -13,7 +14,7 @@ import { PlayerService } from './services/player-service';
 })
 export class AppComponent implements OnInit {
   title = 'genshin-build';
-  user: SocialUser;
+  player: Player;
   loggedIn: boolean;
   sidenavOpened = false;
 
@@ -23,12 +24,19 @@ export class AppComponent implements OnInit {
     private authService: SocialAuthService,
     public dataService: DataService,
     public playerService: PlayerService,
+    public zone: NgZone,
     public router: Router) { }
 
   ngOnInit(): void {
+    this.player = this.playerService.getPlayer();
+    this.playerService.loggedPlayer.subscribe(player => {
+      this.player = player;
+    });
     this.authService.authState.subscribe(socialUser => {
       if (socialUser != null) {
-        this.playerService.login(socialUser).subscribe(su => this.user = su);
+        this.playerService.login(socialUser).subscribe(player => {
+          this.player = player;
+        });
       }
     });
 
@@ -57,7 +65,6 @@ export class AppComponent implements OnInit {
 
   logout(): void {
     this.playerService.logout();
-    this.user = null;
     this.router.navigate(['/']);
   }
 }
