@@ -39,4 +39,32 @@ mat-grid-tile{
   }
 }
 
+.container-name {
+  height: 100%;
+  width: 100%;
+  text-align: left;
+}
 
+.container-vote {
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+
+  span {
+    margin-left: 10px;
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+  mat-icon {
+    font-weight: bold;
+    vertical-align: middle;
+  }
+}
+
+.has-vote {
+  color: rgb(0, 251, 0);
+}

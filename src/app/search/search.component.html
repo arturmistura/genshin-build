@@ -46,7 +46,7 @@
       <ng-container matColumnDef="votes">
         <th mat-header-cell *matHeaderCellDef>Votes</th>
         <td mat-cell *matCellDef="let build">
-          <span>{{build.votes}}</span>
+          <span>{{getVotesNumberByBuild(build.votes)}}</span>
         </td>
       </ng-container>
 
@@ -60,14 +60,6 @@
               {{build.description}}
             </div>
           </div>
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="votes-icon">
-        <th mat-header-cell *matHeaderCellDef>Votes Icon</th>
-        <td mat-cell *matCellDef="let build" class="votes-cell">
-          <mat-icon *ngIf="build.votes >= 0" aria-hidden="false" aria-label="icon">arrow_upward</mat-icon>
-          <mat-icon *ngIf="build.votes < 0" aria-hidden="false" aria-label="icon">arrow_downward</mat-icon>
         </td>
       </ng-container>
 

@@ -1,0 +1,18 @@
+<form (ngSubmit)="addComment()" [formGroup]="commentForm" *ngIf="player">
+  <mat-grid-list [cols]="12" rowHeight="150px">
+    <mat-grid-tile colspan="10">
+      <mat-form-field appearance="standard" class="form-comment">
+        <mat-label>Add a comment</mat-label>
+        <textarea rows="6" matInput formControlName="comment"></textarea>
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="2">
+      <div>
+        <button type="submit" class="save-button" mat-flat-button color="primary">Add comment</button>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+</form>
+<div *ngIf="!player">
+  Log in to add your comments :)
+</div>

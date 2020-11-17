@@ -1,5 +1,24 @@
 <mat-card *ngIf="build">
-  <mat-card-title>{{build.name}}</mat-card-title>
+  <mat-grid-list [cols]="12" rowHeight="50px">
+    <mat-grid-tile colspan="8">
+      <div class="container-name">
+        <span>{{build.name}}</span>
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="4">
+      <div class="container-vote">
+        <button mat-icon-button *ngIf="player" (click)="downvoteBuild()" [class.has-vote]="hasDownvote()">
+          <mat-icon>thumb_down</mat-icon>
+        </button>
+        <span>{{getVotes()}}</span>
+        <button mat-icon-button *ngIf="player" (click)="upvoteBuild()" [class.has-vote]="hasUpvote()">
+          <mat-icon>thumb_up</mat-icon>
+        </button>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+</mat-card>
+<mat-card *ngIf="build">
   <mat-grid-list [cols]="9" gutterSize="15px">
     <mat-grid-tile colspan="3" class="mat-elevation-z8">
       <img class="game-img" src="{{build.character.picture}}">
@@ -56,7 +75,8 @@
           </table>
         </div>
         <div class="active-set">
-          <span class="equiped-sets" (click)="showSetBonus(equipedSets)" matBadge="{{getBadgeNumber()}}">Active Sets</span>
+          <span class="equiped-sets" (click)="showSetBonus(equipedSets)" matBadge="{{getBadgeNumber()}}">Active
+            Sets</span>
         </div>
       </div>
     </mat-grid-tile>
@@ -70,4 +90,10 @@
       <span>{{build.description}}</span>
     </mat-grid-tile>
   </mat-grid-list>
+</mat-card>
+<mat-card>
+  <app-add-comment [build]="build"></app-add-comment>
+</mat-card>
+<mat-card>
+  <app-comments [buildId]="buildId"></app-comments>
 </mat-card>

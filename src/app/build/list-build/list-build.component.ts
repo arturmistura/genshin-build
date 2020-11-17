@@ -12,7 +12,7 @@ import { DataService } from 'src/app/services/data-service';
 })
 export class ListBuildComponent implements OnInit {
   builds: Observable<Build[]>;
-  buildColumns: string[] = ['character', 'name', 'votes', 'votes-icon', 'actions'];
+  buildColumns: string[] = ['character', 'name', 'votes', 'actions'];
 
   constructor(
     public dataService: DataService,
@@ -26,4 +26,7 @@ export class ListBuildComponent implements OnInit {
     });
   }
 
+  getVotes(build: Build): number {
+    return this.dataService.getVotesNumber(build.votes);
+  }
 }

@@ -2,9 +2,10 @@ import { SocialUser } from 'angularx-social-login';
 import { Artefact } from './artefact';
 import { Character } from './character';
 import { Weapon } from './weapon';
+import { Vote } from './vote';
 
 export class Build {
-  id: number;
+  id: string;
   name: string;
   description: string;
   character: Character;
@@ -14,7 +15,7 @@ export class Build {
   sandsOfEon: Artefact;
   gobletOfEnotherm: Artefact;
   circletOfLogos: Artefact;
-  votes: number;
   team: Character[];
   owner: SocialUser;
+  votes: Vote[];
 }

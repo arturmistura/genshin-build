@@ -25,6 +25,7 @@ export class BuildComponent implements OnInit {
       character: new FormControl('', [Validators.required]),
       weapon: new FormControl('', [Validators.required]),
       team: new FormControl('', [Validators.required]),
+      isPublic: new FormControl(''),
       flowerOfLife: new FormGroup({
         artefactSet: new FormControl('', [Validators.required]),
         mainStat: new FormControl('', [Validators.required]),
@@ -94,6 +95,10 @@ export class BuildComponent implements OnInit {
 
   get circletOfLogos(): FormGroup {
     return this.buildForm.get('circletOfLogos') as FormGroup;
+  }
+
+  get isPublic(): AbstractControl {
+    return this.buildForm.controls.isPublic;
   }
 
   openSnackBarValidation(): void {

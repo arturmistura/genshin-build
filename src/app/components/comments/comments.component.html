@@ -1,0 +1,36 @@
+<div *ngFor="let comment of comments" class="mat-elevation-z8 comments-container">
+  <mat-grid-list [cols]="12" rowHeight="35px" class="grid-list">
+    <mat-grid-tile>
+      <div class="vote" *ngIf="player">
+        <button mat-icon-button (click)="upvoteBuild(comment)" [class.has-vote]="hasUpvote(comment)">
+          <mat-icon>keyboard_arrow_up</mat-icon>
+        </button>
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="11">
+      <div class="author-container">
+        By <span class="author">{{ comment.player.name }}</span> on <span
+          class="date">{{ comment.date | date: 'yyyy/MM/dd HH:mm' }}</span>
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <div class="vote">
+        <span>{{ getVotes(comment) }}</span>
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile rowspan="2" colspan="11">
+      <div class="comment-container">
+        <span>
+          {{ comment.text }}
+        </span>
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <div class="vote" *ngIf="player">
+        <button mat-icon-button (click)="downvoteBuild(comment)" [class.has-vote]="hasDownvote(comment)">
+          <mat-icon>keyboard_arrow_down</mat-icon>
+        </button>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

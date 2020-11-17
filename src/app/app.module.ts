@@ -21,6 +21,8 @@ import { BuildWeaponComponent } from './build/build-weapon/build-weapon.componen
 import { environment } from 'src/environments/environment';
 import { BuildDetailComponent } from './build/build-detail/build-detail.component';
 import { ArtefactSetDetailComponent } from './components/artefact-set-detail/artefact-set-detail.component';
+import { CommentsComponent } from './components/comments/comments.component';
+import { AddCommentComponent } from './components/add-comment/add-comment.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { ArtefactSetDetailComponent } from './components/artefact-set-detail/art
     CharacterPictureComponent,
     BuildWeaponComponent,
     BuildDetailComponent,
-    ArtefactSetDetailComponent
+    ArtefactSetDetailComponent,
+    CommentsComponent,
+    AddCommentComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),

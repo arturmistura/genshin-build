@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { Build } from '../models/build';
 import { Character } from '../models/character';
 import { Player } from '../models/player';
+import { Vote } from '../models/vote';
 import { DataService } from '../services/data-service';
 import { PlayerService } from '../services/player-service';
 
@@ -27,7 +28,7 @@ export class SearchComponent implements OnInit {
   player: Player;
 
   builds: Observable<Build[]>;
-  buildColumns: string[] = ['character', 'name', 'votes', 'votes-icon', 'actions'];
+  buildColumns: string[] = ['character', 'name', 'votes', 'actions'];
   buildExpanded: Build | null;
 
   constructor(
@@ -54,10 +55,14 @@ export class SearchComponent implements OnInit {
   }
 
   detailBuild(build: Build): void {
-    this.router.navigate(['build/details', build.id ]);
+    this.router.navigate(['build/details', build.id]);
   }
 
-  redirectToCreateBuild(): void{
+  redirectToCreateBuild(): void {
     this.router.navigate(['build']);
+  }
+
+  getVotesNumberByBuild(votes: Vote[]): number {
+    return this.dataService.getVotesNumber(votes);
   }
 }
