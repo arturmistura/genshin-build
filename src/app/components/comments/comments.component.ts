@@ -42,7 +42,7 @@ export class CommentsComponent implements OnInit {
 
 
   hasUpvote(comment: Comment): boolean {
-    if (this.player) {
+    if (this.player && comment.votes != null && comment.votes.length > 0) {
       return comment.votes.findIndex(vote => {
         return vote.player.id === this.player.id && vote.isUpvote;
       }) !== -1;
@@ -52,7 +52,7 @@ export class CommentsComponent implements OnInit {
   }
 
   hasDownvote(comment: Comment): boolean {
-    if (this.player) {
+    if (this.player && comment.votes != null && comment.votes.length > 0) {
       return comment.votes.findIndex(vote => {
         return vote.player.id === this.player.id && !vote.isUpvote;
       }) !== -1;
@@ -70,9 +70,13 @@ export class CommentsComponent implements OnInit {
   }
 
   getPlayerVote(comment: Comment): Vote {
-    return comment.votes.find(v => {
-      return v.player.id === this.player.id;
-    });
+    if (comment.votes) {
+      return comment.votes.find(v => {
+        return v.player.id === this.player.id;
+      });
+    } else {
+      return null;
+    }
   }
 
   private manageVote(comment: Comment, isUpvote: boolean): void {
@@ -103,6 +107,10 @@ export class CommentsComponent implements OnInit {
     vote.targetId = comment.id;
 
     this.dataService.addVote(vote).subscribe(result => {
+      if (!comment.votes) {
+        comment.votes = [];
+      }
+
       comment.votes.push(result);
     });
   }

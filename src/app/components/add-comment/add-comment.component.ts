@@ -4,10 +4,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Build } from 'src/app/models/build';
 import { Comment } from 'src/app/models/comment';
 import { Player } from 'src/app/models/player';
-import { BuildCommentCreateVM } from 'src/app/models/viewmodels/build-comment-create-vm';
 import { DataService } from 'src/app/services/data-service';
 import { PlayerService } from 'src/app/services/player-service';
-import { CommentsComponent } from '../comments/comments.component';
 
 @Component({
   selector: 'app-add-comment',
@@ -48,7 +46,9 @@ export class AddCommentComponent implements OnInit {
       cm.buildId = this.build.id;
 
       this.dataService.addComment(cm).subscribe(() => {
-        this.snackBar.open('Thanks for your comment');
+        this.snackBar.open('Thanks for your comment', null, {
+          duration: 2000
+        });
         this.commentForm.reset();
       });
     }

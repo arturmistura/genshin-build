@@ -7,6 +7,7 @@ import { BuildDetailComponent } from './build/build-detail/build-detail.componen
 
 const routes: Routes = [
   { path: 'build', component: BuildComponent, canActivate: [AuthGuard] },
+  { path: 'build/:id', component: BuildComponent },
   { path: 'build/details/:id', component: BuildDetailComponent },
   { path: '', component: SearchComponent },
   { path: '**', redirectTo: '' }

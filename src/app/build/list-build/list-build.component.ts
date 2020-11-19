@@ -1,4 +1,5 @@
 import { Component, Input, NgZone, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { SocialUser } from 'angularx-social-login';
 import { Observable } from 'rxjs';
 import { Build } from 'src/app/models/build';
@@ -16,6 +17,7 @@ export class ListBuildComponent implements OnInit {
 
   constructor(
     public dataService: DataService,
+    public router: Router,
     public zone: NgZone) { }
 
   ngOnInit(): void {
@@ -28,5 +30,9 @@ export class ListBuildComponent implements OnInit {
 
   getVotes(build: Build): number {
     return this.dataService.getVotesNumber(build.votes);
+  }
+
+  editBuild(build: Build): void {
+    this.router.navigate(['build/', build.id]);
   }
 }

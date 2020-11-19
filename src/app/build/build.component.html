@@ -1,25 +1,68 @@
 <form [formGroup]="buildForm" (ngSubmit)="saveBuild()">
   <!-- CHARACTER -->
-  <mat-card>
-    <mat-card-title>Select your character</mat-card-title>
-    <app-character-select [parentForm]="buildForm"></app-character-select>
+  <mat-card style="width: 100%;">
+    <mat-card-title>Character to build</mat-card-title>
+    <mat-grid-list cols="12">
+      <mat-grid-tile colspan="2">
+        <mat-form-field appearance="outline">
+          <mat-label>Select your character to build</mat-label>
+          <mat-select formControlName="character">
+            <mat-option>-- None --</mat-option>
+            <mat-optgroup *ngFor="let group of elementGroup" [label]="group.elementText">
+              <mat-option *ngFor="let c of group.characters" [value]="c.id">
+                {{c.name}}
+              </mat-option>
+            </mat-optgroup>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="2">
+        <mat-form-field appearance="outline">
+          <mat-label>Select the weapon</mat-label>
+          <mat-select formControlName="weapon">
+            <mat-option>-- None --</mat-option>
+            <mat-optgroup *ngFor="let group of weaponGroup" [label]="group.weaponTypeText">
+              <mat-option *ngFor="let w of group.weapons" [value]="w.id">
+                {{w.name}}
+              </mat-option>
+            </mat-optgroup>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="2">
+        <mat-form-field appearance="outline">
+          <mat-label>Suggested team</mat-label>
+          <mat-select formControlName="suggestedTeam" multiple>
+            <mat-optgroup *ngFor="let group of elementGroup" [label]="group.elementText">
+              <mat-option *ngFor="let c of group.characters" [value]="c" [disabled]="disableTeamOption(c)">
+                {{c.name}}
+              </mat-option>
+            </mat-optgroup>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="2">
+        <div *ngIf="suggestedTeam.valid && suggestedTeam.value.length > 0">
+          <img src="{{suggestedTeam.value[0].picture}}" class="picture-suggested-team" />
+          <span>{{suggestedTeam.value[0].name}}</span>
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="2">
+        <div *ngIf="suggestedTeam.valid && suggestedTeam.value.length > 1">
+          <img src="{{suggestedTeam.value[1].picture}}" class="picture-suggested-team" />
+          <span>{{suggestedTeam.value[1].name}}</span>
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="2">
+        <div *ngIf="suggestedTeam.valid && suggestedTeam.value.length > 2">
+          <img src="{{suggestedTeam.value[2].picture}}" class="picture-suggested-team" />
+          <span>{{suggestedTeam.value[2].name}}</span>
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
   </mat-card>
   <mat-divider></mat-divider>
-
-  <!-- CHARACTER -->
-  <mat-card>
-    <mat-card-title>Select your weapon</mat-card-title>
-    <app-build-weapon [parentForm]="buildForm"></app-build-weapon>
-  </mat-card>
-  <mat-divider></mat-divider>
-
-  <!-- TEAM -->
-  <mat-card>
-    <mat-card-title>Select your team</mat-card-title>
-    <app-team-build [parentForm]="buildForm"></app-team-build>
-  </mat-card>
-  <mat-divider></mat-divider>
-
+  
   <!-- DESCRIPTION -->
   <mat-card>
     <mat-card-title>Create a name and description to your build</mat-card-title>

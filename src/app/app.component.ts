@@ -1,4 +1,6 @@
 import { Component, NgZone, OnInit } from '@angular/core';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { FacebookLoginProvider, SocialAuthService, SocialUser } from 'angularx-social-login';
 import { Observable } from 'rxjs';
@@ -25,9 +27,19 @@ export class AppComponent implements OnInit {
     public dataService: DataService,
     public playerService: PlayerService,
     public zone: NgZone,
+    public matIconRegistry: MatIconRegistry,
+    public domSanitazer: DomSanitizer,
     public router: Router) { }
 
   ngOnInit(): void {
+    // this.matIconRegistry.addSvgIcon('anemo', this.domSanitazer.bypassSecurityTrustResourceUrl('../assets/icons/Element_Anemo.svg'));
+    // this.matIconRegistry.addSvgIcon('cryo', this.domSanitazer.bypassSecurityTrustResourceUrl('../assets/icons/Element_Cryo.svg'));
+    // this.matIconRegistry.addSvgIcon('dendro', this.domSanitazer.bypassSecurityTrustResourceUrl('../assets/icons/Element_Dendro.svg'));
+    // this.matIconRegistry.addSvgIcon('electro', this.domSanitazer.bypassSecurityTrustResourceUrl('../assets/icons/Element_Electro.svg'));
+    // this.matIconRegistry.addSvgIcon('hydro', this.domSanitazer.bypassSecurityTrustResourceUrl('../assets/icons/Element_Hydro.svg'));
+    // this.matIconRegistry.addSvgIcon('geo', this.domSanitazer.bypassSecurityTrustResourceUrl('../assets/icons/Element_Geo.svg'));
+    // this.matIconRegistry.addSvgIcon('pyro', this.domSanitazer.bypassSecurityTrustResourceUrl('../assets/icons/Element_Pyro.svg'));
+
     this.player = this.playerService.getPlayer();
     this.playerService.loggedPlayer.subscribe(player => {
       this.player = player;
