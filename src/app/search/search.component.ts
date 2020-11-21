@@ -69,6 +69,8 @@ export class SearchComponent implements OnInit {
   redirectToCreateBuild(): void {
     if (!this.player) {
       this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
+    } else {
+      this.router.navigate(['build']);
     }
   }
 
