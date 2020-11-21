@@ -29,14 +29,14 @@ export class BuildCreateComponent implements OnInit {
   artefactSets = new Observable<ArtefactSet[]>();
   availableBonus: ArtefactBonus[] = [];
   selectedBonus: ArtefactBonus[] = [];
-  statCategories = [
-    { value: true, label: 'Main stat' },
-    { value: false, label: 'Sub stat' }
-  ];
   selectedMainStatCategory: boolean = null;
   stats: Stat[] = [];
   selectedMainStats: Stat[] = [];
   selectedSubStats: Stat[] = [];
+  statCategories = [
+    { value: true, label: 'Main stat' },
+    { value: false, label: 'Sub stat' }
+  ];
 
   constructor(
     public dataService: DataService,
