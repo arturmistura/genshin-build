@@ -1,5 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { FacebookLoginProvider, SocialAuthService } from 'angularx-social-login';
 import { Observable } from 'rxjs';
@@ -35,6 +36,7 @@ export class SearchComponent implements OnInit {
     private dataService: DataService,
     private playerService: PlayerService,
     private authService: SocialAuthService,
+    private matSnackBar: MatSnackBar,
     private router: Router) { }
 
   ngOnInit(): void {
@@ -60,10 +62,8 @@ export class SearchComponent implements OnInit {
 
   redirectToCreateBuild(): void {
     if (!this.player) {
-      this.authService.signIn(FacebookLoginProvider.PROVIDER_ID)
-        .then(() => {
-          this.router.navigate(['build']);
-        });
+      this.matSnackBar.open('You need to login to create your builds!', null, { duration: 2000 });
+      this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
     } else {
       this.router.navigate(['build']);
     }
