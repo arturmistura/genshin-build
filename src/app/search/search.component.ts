@@ -38,14 +38,6 @@ export class SearchComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
-    this.authService.authState.subscribe(socialUser => {
-      if (socialUser != null) {
-        this.playerService.login(socialUser).subscribe(player => {
-          this.router.navigate(['build']);
-        });
-      }
-    });
-
     this.player = this.playerService.getPlayer();
     this.playerService.loggedPlayer.subscribe(player => {
       this.player = player;
@@ -68,7 +60,10 @@ export class SearchComponent implements OnInit {
 
   redirectToCreateBuild(): void {
     if (!this.player) {
-      this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
+      this.authService.signIn(FacebookLoginProvider.PROVIDER_ID)
+        .then(() => {
+          this.router.navigate(['build']);
+        });
     } else {
       this.router.navigate(['build']);
     }
