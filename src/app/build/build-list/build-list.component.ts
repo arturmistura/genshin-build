@@ -39,10 +39,12 @@ export class BuildListComponent implements OnInit {
   }
 
   deleteBuild(build: Build): void {
-    this.dataService.deleteBuild(build).subscribe(() => {
-      this.builds = this.dataService.getBuildByPlayer(this.owner);
-      this.snackBar.open('Your build was deleted!!', null, { duration: 2000 });
-      window.location.reload();
-    });
+    if (confirm('Do you realy want to delete this build? You cant recovery it!!')) {
+      this.dataService.deleteBuild(build).subscribe(() => {
+        this.builds = this.dataService.getBuildByPlayer(this.owner);
+        this.snackBar.open('Your build was deleted!!', null, { duration: 2000 });
+        window.location.reload();
+      });
+    }
   }
 }
