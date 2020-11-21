@@ -55,7 +55,11 @@ export class DataService {
   }
 
   saveBuild(build: Build): Observable<any> {
-    return this.httpClient.post(environment.apiUrl + 'build', build, this.httpPostOptions);
+    if (build && build.id) {
+      return this.httpClient.put(environment.apiUrl + 'build', build, this.httpPostOptions);
+    } else {
+      return this.httpClient.post(environment.apiUrl + 'build', build, this.httpPostOptions);
+    }
   }
 
   addComment(comment: Comment): Observable<any> {
@@ -93,5 +97,9 @@ export class DataService {
 
   removeVote(id: string): Observable<boolean> {
     return this.httpClient.delete<boolean>(environment.apiUrl + 'vote/' + id);
+  }
+
+  deleteBuild(build: Build): Observable<any> {
+    return this.httpClient.delete(environment.apiUrl + 'build/' + build.id);
   }
 }

@@ -1,7 +1,7 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SocialAuthService } from 'angularx-social-login';
+import { FacebookLoginProvider, SocialAuthService } from 'angularx-social-login';
 import { Observable } from 'rxjs';
 import { Build } from '../models/build';
 import { Character } from '../models/character';
@@ -38,6 +38,14 @@ export class SearchComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
+    this.authService.authState.subscribe(socialUser => {
+      if (socialUser != null) {
+        this.playerService.login(socialUser).subscribe(player => {
+          this.router.navigate(['build']);
+        });
+      }
+    });
+
     this.player = this.playerService.getPlayer();
     this.playerService.loggedPlayer.subscribe(player => {
       this.player = player;
@@ -59,7 +67,9 @@ export class SearchComponent implements OnInit {
   }
 
   redirectToCreateBuild(): void {
-    this.router.navigate(['build']);
+    if (!this.player) {
+      this.authService.signIn(FacebookLoginProvider.PROVIDER_ID);
+    }
   }
 
   getVotesNumberByBuild(votes: Vote[]): number {

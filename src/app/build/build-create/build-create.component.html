@@ -1,0 +1,172 @@
+<form [formGroup]="buildForm" (ngSubmit)="saveBuild()">
+  <!-- CHARACTER -->
+  <mat-card style="width: 100%;">
+    <mat-card-title>Character to build</mat-card-title>
+    <mat-grid-list cols="12">
+      <mat-grid-tile colspan="2">
+        <mat-form-field appearance="outline">
+          <mat-label>Select your character to build</mat-label>
+          <mat-select [formControl]="character" [compareWith]="compareCharacter">
+            <mat-option>-- None --</mat-option>
+            <mat-optgroup *ngFor="let group of elementGroup" [label]="group.elementText">
+              <mat-option *ngFor="let c of group.characters" [value]="c">
+                {{c.name}}
+              </mat-option>
+            </mat-optgroup>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="2">
+        <mat-form-field appearance="outline">
+          <mat-label>Select the weapon</mat-label>
+          <mat-select [formControl]="weapon" [compareWith]="compareWeapon">
+            <mat-option>-- None --</mat-option>
+            <mat-optgroup *ngFor="let group of weaponGroup" [label]="group.weaponTypeText">
+              <mat-option *ngFor="let w of group.weapons" [value]="w">
+                {{w.name}}
+              </mat-option>
+            </mat-optgroup>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="2">
+        <mat-form-field appearance="outline">
+          <mat-label>Suggested team</mat-label>
+          <mat-select [formControl]="suggestedTeam" multiple [compareWith]="compareTeam">
+            <mat-optgroup *ngFor="let group of elementGroup" [label]="group.elementText">
+              <mat-option *ngFor="let c of group.characters" [value]="c" [disabled]="disableTeamOption(c)">
+                {{c.name}}
+              </mat-option>
+            </mat-optgroup>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="2">
+        <div *ngIf="suggestedTeam.valid && suggestedTeam.value.length > 0">
+          <img src="{{suggestedTeam.value[0].picture}}" class="picture-suggested-team" />
+          <span>{{suggestedTeam.value[0].name}}</span>
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="2">
+        <div *ngIf="suggestedTeam.valid && suggestedTeam.value.length > 1">
+          <img src="{{suggestedTeam.value[1].picture}}" class="picture-suggested-team" />
+          <span>{{suggestedTeam.value[1].name}}</span>
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="2">
+        <div *ngIf="suggestedTeam.valid && suggestedTeam.value.length > 2">
+          <img src="{{suggestedTeam.value[2].picture}}" class="picture-suggested-team" />
+          <span>{{suggestedTeam.value[2].name}}</span>
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </mat-card>
+  <mat-divider></mat-divider>
+
+  <!-- DESCRIPTION -->
+  <mat-card>
+    <mat-card-title>Create a name and description to your build</mat-card-title>
+    <mat-grid-list [cols]="6"rowHeight="150px">
+      <mat-grid-tile>
+        <mat-form-field>
+          <mat-label>Give a name to your build</mat-label>
+          <input matInput type="text" [formControl]="name">
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="4">
+        <mat-form-field>
+          <mat-label>Type some explanation to your build</mat-label>
+          <textarea matInput [formControl]="description" cdkTextareaAutosize #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="5" cdkAutosizeMaxRows="10"></textarea>
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+  </mat-card>
+  <mat-divider></mat-divider>
+
+  <!-- ARTEFACTS -->
+  <mat-card>
+    <mat-card-title>Suggested artefact sets</mat-card-title>
+    <mat-grid-list [cols]="12" rowHeight="350px">
+      <mat-grid-tile colspan="3">
+        <mat-selection-list [multiple]="false" class="mat-elevation-z4">
+          <mat-list-option *ngFor="let artSet of artefactSets | async" [value]="artSet"
+            (click)="selectArtefactSetOption(artSet)">
+            {{artSet.name}}
+          </mat-list-option>
+        </mat-selection-list>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="3">
+        <mat-selection-list [multiple]="false" *ngIf="availableBonus && availableBonus.length > 0"
+          class="mat-elevation-z4">
+          <mat-list-option *ngFor="let ab of availableBonus" (click)="selectBonus(ab)">
+            <div mat-line>{{ab.numberOfPieces}} pieces set</div>
+            <div mat-line>{{ab.description}}</div>
+          </mat-list-option>
+        </mat-selection-list>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="6">
+        <mat-list role="list" *ngIf="selectedBonus && selectedBonus.length > 0" class="mat-elevation-z4">
+          <mat-list-item role="listitem" *ngFor="let sb of selectedBonus">
+            <div mat-line>{{sb.numberOfPieces}} pieces set</div>
+            <div mat-line>{{sb.description}}</div>
+            <mat-icon (click)="removeArtefactSet(sb)">delete</mat-icon>
+          </mat-list-item>
+        </mat-list>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </mat-card>
+
+  <mat-card>
+    <mat-card-title>Suggested stats</mat-card-title>
+    <mat-grid-list [cols]="12" rowHeight="350px">
+      <mat-grid-tile colspan="3">
+        <mat-grid-tile-header>Select which type of stats</mat-grid-tile-header>
+        <mat-selection-list [multiple]="false" class="mat-elevation-z4">
+          <mat-list-option *ngFor="let cat of statCategories" (click)="selectCategory(cat.value)">
+            <div mat-line>{{cat.label}}</div>
+          </mat-list-option>
+        </mat-selection-list>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="3">
+        <mat-grid-tile-header>Available {{selectedMainStatCategory ? 'main' : 'sub'}} stats</mat-grid-tile-header>
+        <mat-selection-list [multiple]="false" *ngIf="stats && stats.length > 0" class="mat-elevation-z4">
+          <mat-list-option *ngFor="let fs of stats" (click)="selectStat(fs)">
+            <div mat-line>{{fs.name}}</div>
+          </mat-list-option>
+        </mat-selection-list>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="3">
+        <mat-grid-tile-header>Suggested main stats</mat-grid-tile-header>
+        <mat-list role="list" *ngIf="selectedMainStats && selectedMainStats.length > 0" class="mat-elevation-z4">
+          <mat-list-item role="listitem" *ngFor="let sb of selectedMainStats">
+            <div mat-line>{{sb.name}}</div>
+            <mat-icon (click)="removeStat(sb, selectedMainStats)">delete</mat-icon>
+          </mat-list-item>
+        </mat-list>
+      </mat-grid-tile>
+      <mat-grid-tile colspan="3">
+        <mat-grid-tile-header>Suggested sub stats</mat-grid-tile-header>
+        <mat-list role="list" *ngIf="selectedSubStats && selectedSubStats.length > 0" class="mat-elevation-z4">
+          <mat-list-item role="listitem" *ngFor="let sb of selectedSubStats">
+            <div mat-line>{{sb.name}}</div>
+            <mat-icon (click)="removeStat(sb, selectedSubStats)">delete</mat-icon>
+          </mat-list-item>
+        </mat-list>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </mat-card>
+
+  <mat-card>
+    <mat-slide-toggle formControlName="isPublic">
+      <span>Your build is {{isPublic.value ? 'public' : 'private'}}</span>
+    </mat-slide-toggle>
+    <button type="submit" class="save-button" mat-flat-button color="primary">Save</button>
+  </mat-card>
+</form>
+<mat-card>
+  <app-comments></app-comments>
+</mat-card>

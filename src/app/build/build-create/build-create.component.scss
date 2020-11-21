@@ -1,0 +1,25 @@
+.save-button {
+  float: right;
+}
+
+.picture-suggested-team {
+  width: 30%;
+}
+
+mat-selection-list, mat-list {
+  max-height: 230px;
+  width: 100%;
+  overflow: auto;
+  margin: 10px;
+}
+
+.stat-type {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+}
+
+mat-form-field {
+  width: 100%;
+  margin: 10px;
+}

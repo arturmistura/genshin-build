@@ -3,6 +3,9 @@ import { Artefact } from './artefact';
 import { Character } from './character';
 import { Weapon } from './weapon';
 import { Vote } from './vote';
+import { Stat } from './stat';
+import { ArtefactSet } from './artefact-set';
+import { ArtefactBonus } from './artefact-bonus';
 
 export class Build {
   id: string;
@@ -10,12 +13,11 @@ export class Build {
   description: string;
   character: Character;
   weapon: Weapon;
-  flowerOfLife: Artefact;
-  plumeOfDeath: Artefact;
-  sandsOfEon: Artefact;
-  gobletOfEnotherm: Artefact;
-  circletOfLogos: Artefact;
-  team: Character[];
+  suggestedSets: ArtefactBonus[];
+  suggestedMainStats: Stat[];
+  suggestedSubStats: Stat[];
+  suggestedTeam: Character[];
   owner: SocialUser;
   votes: Vote[];
+  date: Date;
 }

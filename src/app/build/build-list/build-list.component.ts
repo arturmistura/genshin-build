@@ -1,30 +1,32 @@
 import { Component, Input, NgZone, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { SocialUser } from 'angularx-social-login';
 import { Observable } from 'rxjs';
 import { Build } from 'src/app/models/build';
 import { Player } from 'src/app/models/player';
 import { DataService } from 'src/app/services/data-service';
 
 @Component({
-  selector: 'app-list-build',
-  templateUrl: './list-build.component.html',
-  styleUrls: ['./list-build.component.scss']
+  selector: 'app-build-list',
+  templateUrl: './build-list.component.html',
+  styleUrls: ['./build-list.component.scss']
 })
-export class ListBuildComponent implements OnInit {
+export class BuildListComponent implements OnInit {
   builds: Observable<Build[]>;
   buildColumns: string[] = ['character', 'name', 'votes', 'actions'];
+  owner: Player;
 
   constructor(
     public dataService: DataService,
     public router: Router,
+    public snackBar: MatSnackBar,
     public zone: NgZone) { }
 
   ngOnInit(): void {
     this.zone.run(() => {
-      const owner = JSON.parse(localStorage.getItem('socialUser'));
+      this.owner = JSON.parse(localStorage.getItem('socialUser'));
 
-      this.builds = this.dataService.getBuildByPlayer(owner);
+      this.builds = this.dataService.getBuildByPlayer(this.owner);
     });
   }
 
@@ -34,5 +36,13 @@ export class ListBuildComponent implements OnInit {
 
   editBuild(build: Build): void {
     this.router.navigate(['build/', build.id]);
+  }
+
+  deleteBuild(build: Build): void {
+    this.dataService.deleteBuild(build).subscribe(() => {
+      this.builds = this.dataService.getBuildByPlayer(this.owner);
+      this.snackBar.open('Your build was deleted!!', null, { duration: 2000 });
+      window.location.reload();
+    });
   }
 }

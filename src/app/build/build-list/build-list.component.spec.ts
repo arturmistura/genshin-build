@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BuildWeaponComponent } from './build-weapon.component';
+import { BuildListComponent } from './build-list.component';
 
-describe('BuildWeaponComponent', () => {
-  let component: BuildWeaponComponent;
-  let fixture: ComponentFixture<BuildWeaponComponent>;
+describe('BuildListComponent', () => {
+  let component: BuildListComponent;
+  let fixture: ComponentFixture<BuildListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BuildWeaponComponent ]
+      declarations: [ BuildListComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BuildWeaponComponent);
+    fixture = TestBed.createComponent(BuildListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

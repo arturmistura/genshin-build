@@ -26,7 +26,7 @@
 
 <mat-sidenav-container>
   <mat-sidenav *ngIf="player && player.email" mode="side" [(opened)]="sidenavOpened">
-    <app-list-build></app-list-build>
+    <app-build-list></app-build-list>
   </mat-sidenav>
   <mat-sidenav-content>
     <router-outlet></router-outlet>

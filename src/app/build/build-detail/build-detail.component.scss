@@ -68,3 +68,20 @@ mat-grid-tile{
 .has-vote {
   color: rgb(0, 251, 0);
 }
+
+.suggested-container {
+  max-width: 300px;
+
+  mat-list-item{
+    margin-bottom: 10px;
+    height: 100%;
+  }
+
+  .label-name {
+    font-size: 1vw;
+    font-weight: bold;
+  }
+
+  .label-description {
+  }
+}

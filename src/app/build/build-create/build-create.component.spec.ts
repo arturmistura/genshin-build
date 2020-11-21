@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CharacterPictureComponent } from './character-picture.component';
+import { BuildCreateComponent } from './build-create.component';
 
-describe('CharacterPictureComponent', () => {
-  let component: CharacterPictureComponent;
-  let fixture: ComponentFixture<CharacterPictureComponent>;
+describe('BuildCreateComponent', () => {
+  let component: BuildCreateComponent;
+  let fixture: ComponentFixture<BuildCreateComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CharacterPictureComponent ]
+      declarations: [ BuildCreateComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CharacterPictureComponent);
+    fixture = TestBed.createComponent(BuildCreateComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
